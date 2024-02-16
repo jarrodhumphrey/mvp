@@ -1,0 +1,95 @@
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    background-color: #f0f0f0;
+}
+
+#gameContainer {
+    width: 90%;
+    max-width: 600px;
+    margin: auto;
+    text-align: center;
+}
+
+#caseTitle {
+    text-transform: uppercase;
+}
+
+
+button {
+    margin-top: 20px;
+    padding: 10px 20px;
+    font-size: 16px;
+    cursor: pointer;
+}
+
+#progressBarContainer {
+    width: 100%;
+    background-color: #e0e0e0;
+    margin: 10px 0;
+}
+
+#progressBar {
+    height: 20px;
+    width: 0%;
+    background-color: #4CAF50;
+    transition: width 90s linear; /* Transition over 90 seconds */
+}
+
+#proceedToQuestions {
+    display: block; /* Change from inline to block for margin auto to work */
+    margin: 20px auto; /* Vertical margin and auto horizontal margin for centering */
+    padding: 10px 20px;
+    font-size: 16px;
+    cursor: pointer;
+}
+
+#questionProgressBarContainer {
+    width: 100%;
+    background-color: #e0e0e0;
+    margin: 10px 0;
+}
+
+#questionProgressBar {
+    height: 20px;
+    animation: none; /* No animation initially */
+    width: 0%;
+    background-color: #4CAF50;
+    transition: width 30s linear; /* Transition over 30 seconds */
+}
+
+#answerOptions {
+    list-style: none; /* Removes bullets */
+    padding: 0;
+    margin: 0; /* Removes default margin */
+}
+
+.answerButton {
+    display: block;
+    width: 100%;
+    padding: 10px;
+    margin: 5px 0;
+    background-color: #f0f0f0;
+    border: 1px solid #ccc;
+    cursor: pointer;
+    text-align: center; /* Aligns text to the center */
+}
+
+
+
+@keyframes fillBar {
+    from { width: 0%; }
+    to { width: 100%; }
+}
+
+
+#questionProgressBar.active {
+    animation: fillBar 30s linear forwards; /* Animation will fill the bar in 30 seconds */
+}
+
+
