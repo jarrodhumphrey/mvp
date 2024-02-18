@@ -92,4 +92,14 @@ button {
     animation: fillBar 30s linear forwards; /* Animation will fill the bar in 30 seconds */
 }
 
+h1 {
+    text-align: center;
+    text-transform: uppercase;
+    /* Additional styling */
+}
+
+.question, .answer {
+    font-weight: bold;
+}
+
 

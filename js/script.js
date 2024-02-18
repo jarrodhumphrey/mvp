@@ -2,11 +2,11 @@ document.addEventListener("DOMContentLoaded", () => {
     const questions = [
         {
             text: "Netflix’s minimum viable product was designed to be a...",
-            options: ["…comprehensive version of a new product with all intended features.", "…basic version of a product with enough features to attract early adopters.", "…prototype used exclusively for internal testing before national product launch."],
+            options: ["…comprehensive version of a new product with all intended features.", "…basic version of a product with enough features to attract early adopters.", "…prototype used exclusively for long-term planning in advance of a national product launch."],
             correctAnswer: 1
         },
         {
-            text: "MVPs like the Netflix kiosk emerged in the early 2010s as a part of which famous approach to innovation?",
+            text: "MVPs like the Netflix kiosk gained widespread popularity in the early 2010s as a part of which famous approach to innovation created by Eric Ries?",
             options: ["Lean Startup Methodology", "Design Thinking", "Intrapreneurship"],
             correctAnswer: 0
         },
@@ -179,6 +179,11 @@ document.addEventListener("DOMContentLoaded", () => {
         questionSection.style.display = "none";
         resultsSection.innerHTML = "";
         
+         // Leaderboard title
+        const leaderboardTitle = document.createElement("h1");
+        leaderboardTitle.textContent = "LEADERBOARD";
+        resultsSection.appendChild(leaderboardTitle);
+
         let totalCompositeScore = 0;
         let totalTime = 0; // Initialize total time
     
@@ -212,8 +217,8 @@ document.addEventListener("DOMContentLoaded", () => {
         // New section for displaying questions, correct answers, and direct explanation text
         const answersSection = document.createElement("div");
         const explanations = [
-            "The concept of a Minimum Viable Product (MVP) involves creating a product that, despite being in its earliest stage of development, has enough functionality to satisfy early adopters. The goal is to launch a basic but functional version of the product to the market quickly. This approach allows companies to gather valuable feedback from its initial users, which can then be used to refine and improve the product in a more targeted and efficient manner. In the case of Netflix, their MVP was not their online streaming platform but a simpler, more tangible product: a basic kiosk for DVD rentals. This allowed Netflix to test the viability of their distribution concept directly with customers without committing excessive resources to development.",
-            "The Lean Startup Methodology is an approach to business development that emphasizes creating and managing startups in a more efficient way by building minimal versions of new products to measure customer reaction and make adjustments before making significant investments. This methodology encourages startups to launch products quickly, learn from customer feedback, and iterate or pivot as necessary. MVPs are a core component of this approach, as they represent the most stripped-down version of a product that is still viable. The Netflix kiosk experiment, conducted in the early stages of the company, aligns with this methodology by testing a basic version of their product concept in a real-world environment to gauge customer interest and gather insights.",
+            "The concept of a Minimum Viable Product (MVP) involves creating a product that, despite being in its earliest stage of development, has enough functionality to satisfy early adopters. The goal is to launch a basic but functional version of the product to the market quickly. This approach allows companies to gather valuable feedback from its initial users, which can then be used to refine and improve the product in a more targeted and efficient manner. In the Netflix case, their MVP was not their online streaming platform but a basic kiosk for DVD rentals. This allowed Netflix to test the viability of a new distribution concept directly with customers without committing excessive resources to development.",
+            "The Lean Startup Methodology is an approach to innovation that emphasizes managing uncertainty in an efficient way by building minimal versions of new products to measure customer reaction and make adjustments before making significant investments. This methodology encourages companies to launch products quickly, learn from customer feedback, and iterate or pivot as necessary. MVPs are a core component of this approach, as they represent the most stripped-down version of a product that is still viable. The Netflix kiosk experiment, conducted in the early stages of the company, aligns with this methodology by testing a basic version of their product concept in a real-world environment to gauge customer interest and gather insights.",
             "Validated learning is a key concept within the Lean Startup Methodology, focusing on the process of learning about customers' needs, preferences, and behaviors by developing and testing a basic product or service model. It involves a cycle of building, measuring, and learning with the aim of making data-driven decisions as quickly as possible. In Netflix's scenario, validated learning was achieved through their experiment with a manned DVD rental kiosk in a supermarket. By interacting directly with customers and observing their responses to the kiosk, Netflix was able to gather concrete evidence about the market's interest in DVD rentals and the practicality of their distribution model. This feedback loop is crucial for refining business models and ensuring that the product development process is aligned with actual customer needs and market demand."
         ];
         questions.forEach((question, index) => {
