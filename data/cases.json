@@ -1,0 +1,44 @@
+[
+  {
+    "id": "20240224-Netflix",
+    "title": "Netflix Case",
+    "snippet": "In the late 1990s, a startup named Netflix emerged...123",
+    "content": [
+      "In the late 1990s, a startup named Netflix emerged in the competitive entertainment market with a business model built around mailing DVDs to customers, a novel concept at the time. In the early stages, Netflix carried less than a thousand DVD titles. With a daily shipment volume of twenty to thirty, their operations were manageable without advanced technology. However, the introduction of their no-due-date, no-late-fees program led to an explosion in popularity. The subscriber count soared to 250,000, and the DVD library expanded to nearly 10,000 titles. Netflix had to adapt quickly and figure out how to efficiently manage and distribute a growing library of DVDs to a rapidly expanding customer base.",
+      "With a need for an innovative solution, Netflix co-founder Marc Randolph and an early Netflix employee explored the idea of automated DVD rental kiosks in high-traffic areas, such as grocery stores and shopping malls. Embracing the concept of a Minimum Viable Product (MVP), they opted for a hands-on approach. Rather than pouring millions into developing a sophisticated vending machine, they set up a simple, manned kiosk in a bustling supermarket. This makeshift setup focused primarily on direct interaction with customers and gathering immediate feedback on their new distribution method. This approach allowed Netflix to gauge the feasibility and reception of its idea quickly and effectively, staying true to its ethos of agile adaptation and customer-centric innovation.",
+      "After their supermarket kiosk experiment, Netflix decided not to pursue the idea further. However, Mitch Lowe, the Netflix employee also responsible for the initial test, took the concept and ran with it. He later helped found a company you might have heard of - RedBox - turning the once humble supermarket test into a widespread success story of automated DVD rentals."
+    ],
+    "questions": [
+      {
+        "text": "Netflix’s minimum viable product was designed to be a...",
+        "options": [
+          "...comprehensive version of a new product with all intended features.",
+          "...basic version of a product with enough features to attract early adopters.",
+          "...prototype used exclusively for long-term planning in advance of a national product launch."
+        ],
+        "correctAnswer": 1,
+        "explanation": "The concept of a Minimum Viable Product (MVP) involves creating a product that, despite being in its earliest stage of development, has enough functionality to satisfy early adopters. The goal is to launch a basic but functional version of the product to the market quickly. This approach allows companies to gather valuable feedback from its initial users, which can then be used to refine and improve the product in a more targeted and efficient manner. In the Netflix case, their MVP was not their online streaming platform but a basic kiosk for DVD rentals. This allowed Netflix to test the viability of a new distribution concept directly with customers without committing excessive resources to development."
+      },
+      {
+        "text": "MVPs like the Netflix kiosk gained widespread popularity...",
+        "options": [
+          "Lean Startup Methodology",
+          "Design Thinking",
+          "Intrapreneurship"
+        ],
+        "correctAnswer": 0,
+        "explanation": "The Lean Startup Methodology is an approach to innovation that emphasizes managing uncertainty in an efficient way by building minimal versions of new products to measure customer reaction and make adjustments before making significant investments. This methodology encourages companies to launch products quickly, learn from customer feedback, and iterate or pivot as necessary. MVPs are a core component of this approach, as they represent the most stripped-down version of a product that is still viable. The Netflix kiosk experiment, conducted in the early stages of the company, aligns with this methodology by testing a basic version of their product concept in a real-world environment to gauge customer interest and gather insights."
+      },
+      {
+        "text": "In the context of the Netflix case, validated learning can be best described as:",
+        "options": [
+          "The process of verifying market demand through extensive surveys before product development.",
+          "A technique for learning about customers' needs through the launch and adjustment of a prototype.",
+          "The confirmation of a product's final design through customer feedback."
+        ],
+        "correctAnswer": 1,
+        "explanation": "Validated learning is a key concept within the Lean Startup Methodology, focusing on the process of learning about customers' needs, preferences, and behaviors by developing and testing a basic product or service model. It involves a cycle of building, measuring, and learning with the aim of making data-driven decisions as quickly as possible. In Netflix's scenario, validated learning was achieved through their experiment with a manned DVD rental kiosk in a supermarket. By interacting directly with customers and observing their responses to the kiosk, Netflix was able to gather concrete evidence about the market's interest in DVD rentals and the practicality of their distribution model. This feedback loop is crucial for refining business models and ensuring that the product development process is aligned with actual customer needs and market demand."
+      }
+    ]
+  }
+]
