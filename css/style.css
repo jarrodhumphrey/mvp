@@ -20,6 +20,9 @@ body {
     text-transform: uppercase;
 }
 
+#welcomeTitle {
+    text-transform: uppercase;
+}
 
 button {
     margin-top: 20px;

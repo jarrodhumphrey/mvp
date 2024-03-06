@@ -1,3 +1,5 @@
+<!-- http://192.168.1.84:8080 -->
+<!-- http://127.0.0.1:8080 -->
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -10,7 +12,7 @@
     <div id="gameContainer">
         <!-- Introduction Section -->
         <section id="introSection">
-            <h1 id="caseTitle">Welcome to CaseRace</h1>
+            <h1 id="welcomeTitle">Welcome to CaseRace</h1>
             <h3 style="text-align: center; text-decoration: underline;">Today's CaseRace:</h3>
             <p id="caseSnippet"><!-- Snippet will be loaded here dynamically --></p>
             <button id="startButton">Click to Start this CaseRace</button>
@@ -21,11 +23,12 @@
 
         <!-- Case Study Section (Content loaded dynamically) -->
         <section id="caseSection" style="display:none;">
+            <h1 id="caseTitle"></h1>
             <div id="progressBarContainer">
                 <div id="progressBar"></div>
             </div>
             <div id="caseContent"></div> <!-- Content populated dynamically -->
-            <button id="proceedToQuestions" style="display:none;">Proceed to Questions</button>
+            <button id="proceedToQuestions" style="display:none;">Proceed to Question 1</button>
         </section>
         
         <!-- Questions Section (Questions and options loaded dynamically) -->

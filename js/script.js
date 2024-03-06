@@ -36,31 +36,28 @@ document.addEventListener("DOMContentLoaded", () => {
                 console.error('No case is selected or available.');
                 return;
             }
-        
+            
             // Update the UI with the case title
             document.getElementById("caseTitle").textContent = currentCase.title;
-        
+    
+
             // Load the snippet into the intro section
             document.getElementById("caseSnippet").textContent = currentCase.snippet;
         
             // Assuming the first paragraph of the content array is the introduction or summary
             const introSection = document.getElementById("introSection");
-            const caseIntroParagraph = document.createElement("p");
-            caseIntroParagraph.textContent = currentCase.content[0];
-            introSection.appendChild(caseIntroParagraph);
-        
+                    
             // Hide the proceed button initially
             const proceedButton = document.getElementById("proceedToQuestions");
             proceedButton.style.display = "none";
         
             // Prepare the case content to be shown after clicking the start button
             const caseContentDiv = document.getElementById("caseContent");
-            currentCase.content.forEach((paragraph, index) => {
-                if (index > 0) { // Skip the first paragraph since it's used as the intro
-                    const p = document.createElement("p");
-                    p.textContent = paragraph;
-                    caseContentDiv.appendChild(p);
-                }
+             currentCase.content.forEach((paragraph, index) => {
+                const p = document.createElement("p");
+                p.textContent = paragraph;
+                caseContentDiv.appendChild(p);
+             
             });
         
             // Initialize the progress bar
