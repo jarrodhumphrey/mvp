@@ -105,4 +105,26 @@ h1 {
     font-weight: bold;
 }
 
+#showPriorCasesBtn {
+    display: block; /* Makes the button fill the width of its container */
+    margin: 20px auto; /* Adds margin and centers the button */  
+    padding: 10px 20px;
+    font-size: 16px;
+    cursor: pointer;
+    background-color: #4CAF50; /* Example color, change as needed */
+    color: white;          
+    border: none;          /* Removes default border */
+    border-radius: 5px;    /* Adds a slight curve to the button */
+  }
 
+  .caseRaceButton {
+    display: block; /* Makes the button fill the width of its container */
+    margin: 20px auto; /* Adds margin and centers the button */  
+    padding: 10px 20px;
+    font-size: 16px;
+    cursor: pointer;
+    background-color: #4CAF50; /* Example color, change as needed */
+    color: white;          
+    border: none;          /* Removes default border */
+    border-radius: 5px;    /* Adds a slight curve to the button */
+}

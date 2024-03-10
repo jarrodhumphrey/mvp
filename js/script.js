@@ -81,7 +81,7 @@ document.addEventListener("DOMContentLoaded", () => {
         // Show 'proceed to questions' button after a delay
         setTimeout(function() {
             proceedToQuestions.style.display = "block";
-        }, 5000);
+        }, 500);
     
         // After 90 seconds, or when the user decides to proceed, show the first question
         caseTimerId = setTimeout(() => {
@@ -218,7 +218,7 @@ document.addEventListener("DOMContentLoaded", () => {
         clearTimeout(questionTransitionTimerId);
         questionSection.style.display = "none";
         resultsSection.innerHTML = "";
-        
+    
         // Leaderboard title
         const leaderboardTitle = document.createElement("h1");
         leaderboardTitle.textContent = "LEADERBOARD";
@@ -230,7 +230,7 @@ document.addEventListener("DOMContentLoaded", () => {
         userAnswers.forEach((answer, index) => {
             const validAccuracyPoints = Number.isFinite(answer.accuracyPoints) ? answer.accuracyPoints : 0;
             const validSpeedPoints = Number.isFinite(answer.speedPoints) ? answer.speedPoints : 0;
-            
+    
             const lapTimeInSeconds = parseFloat(answer.lapTime);
             totalTime += lapTimeInSeconds; // Sum lap times
     
@@ -244,47 +244,100 @@ document.addEventListener("DOMContentLoaded", () => {
         const totalScoreElement = document.createElement("p");
         totalScoreElement.textContent = `CaseRace Composite Score: ${totalCompositeScore.toFixed(2)}`;
         resultsSection.appendChild(totalScoreElement);
-      
+    
         const totalTimeElement = document.createElement("p");
         totalTimeElement.textContent = `Total Time: ${totalTime.toFixed(2)} seconds`;
         resultsSection.appendChild(totalTimeElement);
     
         // Horizontal bar separator
-        const separatorAfterScore = document.createElement("hr");
-        resultsSection.appendChild(separatorAfterScore);
+       // const separatorAfterScore = document.createElement("hr");
+        //resultsSection.appendChild(separatorAfterScore);
     
-         
-        // New section for displaying questions, correct answers, and direct explanation text
-        const answersSection = document.createElement("div");
-        currentCase.questions.forEach((question, index) => {
-            if (index > 0) { // Add separator before new question starts, except before the first one
-                const separator = document.createElement("hr");
-                answersSection.appendChild(separator);
+        // 'Show Prior Cases' button
+        const showPriorCasesBtn = document.createElement("button");
+        showPriorCasesBtn.id = "showPriorCasesBtn";
+        showPriorCasesBtn.classList.add("caseRaceButton"); // Apply the shared style class
+        showPriorCasesBtn.textContent = "Access Prior CaseRaces";
+        resultsSection.appendChild(showPriorCasesBtn);
+    
+        // 'Show Answers and Explanations' button
+        const showAnswersBtn = document.createElement("button");
+        showAnswersBtn.id = "showAnswersBtn"; // You can keep the ID if you need it for other specific purposes
+        showAnswersBtn.classList.add("caseRaceButton"); // Apply the shared style class
+        showAnswersBtn.textContent = "Show Answers and Explanations";
+        resultsSection.appendChild(showAnswersBtn);
+        showAnswersBtn.addEventListener("click", () => showAnswersPopup(userAnswers, currentCase));
+            
+        resultsSection.style.display = "block";
+    }
+    
+    function showAnswersPopup(userAnswers, currentCase) {
+        const popup = document.createElement("div");
+        popup.id = "answersPopup";
+        // Style the popup
+        Object.assign(popup.style, {
+            position: 'fixed',
+            top: '50%',
+            left: '50%',
+            transform: 'translate(-50%, -50%)',
+            backgroundColor: 'white',
+            padding: '20px',
+            border: '2px solid black',
+            zIndex: 1000,
+            maxHeight: '80%',
+            overflowY: 'auto',
+            width: '80%',
+            maxWidth: '600px'
+        });
+    
+        const closeButton = document.createElement("button");
+        closeButton.textContent = "Close";
+        closeButton.addEventListener("click", () => document.body.removeChild(popup));
+    
+        // Append the close button to the popup
+        popup.appendChild(closeButton);
+    
+        // Generate content based on user answers and append to the popup
+        userAnswers.forEach((answer, index) => {
+            const questionText = document.createElement("p");
+            questionText.textContent = `Q${index + 1}: ${currentCase.questions[index].text}`;
+            popup.appendChild(questionText);
+    
+            // Determine if the answer was correct and display the appropriate message
+            if (answer.correct) {
+                const correctAnswerText = document.createElement("p");
+                correctAnswerText.textContent = `Your correct answer: ${answer.selected}`;
+                correctAnswerText.style.color = "#4CAF50"; // Green color for correct answers
+                correctAnswerText.style.fontWeight = "bold"; // Make text bold
+                popup.appendChild(correctAnswerText);
+            } else {
+                const incorrectAnswerText = document.createElement("p");
+                incorrectAnswerText.textContent = `Your incorrect answer: ${answer.selected}`;
+                incorrectAnswerText.style.color = "red"; // Red color for incorrect answers
+                incorrectAnswerText.style.fontWeight = "bold"; // Make text bold
+                popup.appendChild(incorrectAnswerText);
+    
+                const correctAnswerText = document.createElement("p");
+                correctAnswerText.textContent = `Correct answer: ${currentCase.questions[index].options[currentCase.questions[index].correctAnswer]}`;
+                correctAnswerText.style.color = "#4CAF50"; // Green color for the correct answer, even if the user was incorrect
+                correctAnswerText.style.fontWeight = "bold"; // Make text bold
+                popup.appendChild(correctAnswerText);
             }
     
-            const questionElement = document.createElement("p");
-            questionElement.textContent = `Q${index + 1} Question: ${question.text}`;
-            answersSection.appendChild(questionElement);
+            const explanationText = document.createElement("p");
+            explanationText.textContent = `Explanation: ${currentCase.questions[index].explanation}`;
+            popup.appendChild(explanationText);
     
-            const correctAnswerElement = document.createElement("p");
-            correctAnswerElement.textContent = `Q${index + 1} Correct Answer: ${question.options[question.correctAnswer]}`;
-            answersSection.appendChild(correctAnswerElement);
-    
-            // Directly include the explanation text from the currentCase data
-            const explanationElement = document.createElement("p");
-            explanationElement.textContent = question.explanation; // Now pulling directly from the question data
-            answersSection.appendChild(explanationElement);
+            const separator = document.createElement("hr");
+            popup.appendChild(separator);
         });
-        resultsSection.appendChild(answersSection);
     
-        resultsSection.style.display = "block";
+    
+        document.body.appendChild(popup);
     }
     
     
     
-    
-    
-    
 
-       updateQuestionAndAnswers(0);
+      // updateQuestionAndAnswers(0);
 });
