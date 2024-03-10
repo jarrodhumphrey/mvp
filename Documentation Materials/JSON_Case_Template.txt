@@ -1,0 +1,44 @@
+
+  {
+    "id": "YYYYMMDD-Company Name",
+    "title": "Title of the Case",
+    "snippet": "Sentence fragment to draw them in...",
+    "content": [
+      "Paragraph 1 Text",
+      "Paragraph 2 Text",
+      "Paragraph 3 Text",
+    ],
+    "questions": [
+      {
+        "text": "Text of Question 1",
+        "options": [
+          "Answer Choice 1",
+          "Answer Choice 2",
+          "Answer Choice 3"
+        ],
+        "correctAnswer": 012,
+        "explanation": "Explanation of Question 1"
+      },
+      {
+        "text": "Text of Question 1",
+        "options": [
+          "Answer Choice 1",
+          "Answer Choice 2",
+          "Answer Choice 3"
+        ],
+        "correctAnswer": 012,
+        "explanation": "Explanation of Question 1"
+      },
+      {
+        "text": "Text of Question 3",
+        "options": [
+          "Answer Choice 1",
+          "Answer Choice 2",
+          "Answer Choice 3"
+        ],
+        "correctAnswer": 012,
+        "explanation": "Explanation of Question 3"
+      }
+    ]
+  }
+

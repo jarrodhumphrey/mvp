@@ -1,0 +1,17 @@
+If You Have Node.js Installed:
+Install http-server:
+
+Open your terminal or command prompt.
+
+Navigate to your project directory using "cd c:\Users\jarro\OneDrive\Desktop\CaseRace\Building MVP"
+
+Run "npm install --global http-server" to install a simple, zero-configuration command-line HTTP server globally on your machine.
+
+Start the Server:
+
+In your terminal, still within your project directory, run "http-server".
+
+This command serves your project on a local server, typically available at http://localhost:8080.
+
+<!-- http://192.168.1.84:8080 -->
+<!-- http://127.0.0.1:8080 -->
