@@ -128,3 +128,63 @@ h1 {
     border: none;          /* Removes default border */
     border-radius: 5px;    /* Adds a slight curve to the button */
 }
+
+/* In your CSS file */
+#caseModal {
+    display: none;
+    position: fixed;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+    background-color: white;
+    padding: 20px;
+    border: 2px solid black;
+    z-index: 1000;
+    width: 80%;
+    max-width: 600px;
+    overflow-y: auto;
+}
+
+#caseModal .closeButton {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+}
+
+#caseModal ul {
+    list-style: none;
+    padding: 0;
+}
+
+#caseModal li {
+    cursor: pointer;
+    margin: 10px;
+    border-bottom: 1px solid #ddd;
+}
+
+
+#caseModal table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+#caseModal th, #caseModal td {
+    border: 1px solid #ddd;
+    padding: 8px;
+    text-align: left;
+}
+
+#caseModal tr:nth-child(even) {
+    background-color: #f2f2f2;
+}
+
+#caseModal tr:hover {
+    background-color: #ddd;
+}
+
+#caseModal th {
+    padding-top: 12px;
+    padding-bottom: 12px;
+    background-color: #04AA6D;
+    color: white;
+}

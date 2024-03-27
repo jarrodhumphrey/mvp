@@ -1,7 +1,10 @@
 [
   {
     "id": "20240224-Netflix",
+    "date": "2024-03-27",
     "title": "Netflix Case Test",
+    "topic": "Startups",
+    "caserace #":"5",
     "snippet": "In the late 1990s, a startup named Netflix emerged...",
     "content": [
       "In the late 1990s, a startup named Netflix emerged in the competitive entertainment market with a business model built around mailing DVDs to customers, a novel concept at the time. In the early stages, Netflix carried less than a thousand DVD titles. With a daily shipment volume of twenty to thirty, their operations were manageable without advanced technology. However, the introduction of their no-due-date, no-late-fees program led to an explosion in popularity. The subscriber count soared to 250,000, and the DVD library expanded to nearly 10,000 titles. Netflix had to adapt quickly and figure out how to efficiently manage and distribute a growing library of DVDs to a rapidly expanding customer base.",
@@ -43,8 +46,146 @@
   },
   {
     "id": "YYYYMMDD-Company Name",
+    "date": "2024-03-26",
     "title": "Title of the Case",
-    "snippet": "Sentence fragment to draw them in...",
+    "topic": "Finance",
+    "caserace #":"4",
+    "snippet": "TEST Sentence fragment to draw them in...",
+    "content": [
+      "Paragraph 1 Text",
+      "Paragraph 2 Text",
+      "Paragraph 3 Text"
+    ],
+    "questions": [
+      {
+        "text": "Text of Question 1",
+        "options": [
+          "Answer Choice 1",
+          "Answer Choice 2",
+          "Answer Choice 3"
+        ],
+        "correctAnswer": 0,
+        "explanation": "Explanation of Question 1"
+      },
+      {
+        "text": "Text of Question 1",
+        "options": [
+          "Answer Choice 1",
+          "Answer Choice 2",
+          "Answer Choice 3"
+        ],
+        "correctAnswer": 1,
+        "explanation": "Explanation of Question 1"
+      },
+      {
+        "text": "Text of Question 3",
+        "options": [
+          "Answer Choice 1",
+          "Answer Choice 2",
+          "Answer Choice 3"
+        ],
+        "correctAnswer": 2,
+        "explanation": "Explanation of Question 3"
+      }
+    ]
+  },
+  {
+    "id": "YYYYMMDD-Company Name",
+    "date": "2024-03-25",
+    "title": "Title of the Case",
+    "topic": "Strategy",
+    "caserace #":"3",
+    "snippet": "TEST Sentence fragment to draw them in...",
+    "content": [
+      "Paragraph 1 Text",
+      "Paragraph 2 Text",
+      "Paragraph 3 Text"
+    ],
+    "questions": [
+      {
+        "text": "Text of Question 1",
+        "options": [
+          "Answer Choice 1",
+          "Answer Choice 2",
+          "Answer Choice 3"
+        ],
+        "correctAnswer": 0,
+        "explanation": "Explanation of Question 1"
+      },
+      {
+        "text": "Text of Question 1",
+        "options": [
+          "Answer Choice 1",
+          "Answer Choice 2",
+          "Answer Choice 3"
+        ],
+        "correctAnswer": 1,
+        "explanation": "Explanation of Question 1"
+      },
+      {
+        "text": "Text of Question 3",
+        "options": [
+          "Answer Choice 1",
+          "Answer Choice 2",
+          "Answer Choice 3"
+        ],
+        "correctAnswer": 2,
+        "explanation": "Explanation of Question 3"
+      }
+    ]
+  },
+  {
+    "id": "YYYYMMDD-Company Name",
+    "date": "2024-03-24",
+    "title": "Title of the Case",
+    "topic": "Logistics",
+    "caserace #":"2",
+    "snippet": "TEST Sentence fragment to draw them in...",
+    "content": [
+      "Paragraph 1 Text",
+      "Paragraph 2 Text",
+      "Paragraph 3 Text"
+    ],
+    "questions": [
+      {
+        "text": "Text of Question 1",
+        "options": [
+          "Answer Choice 1",
+          "Answer Choice 2",
+          "Answer Choice 3"
+        ],
+        "correctAnswer": 0,
+        "explanation": "Explanation of Question 1"
+      },
+      {
+        "text": "Text of Question 1",
+        "options": [
+          "Answer Choice 1",
+          "Answer Choice 2",
+          "Answer Choice 3"
+        ],
+        "correctAnswer": 1,
+        "explanation": "Explanation of Question 1"
+      },
+      {
+        "text": "Text of Question 3",
+        "options": [
+          "Answer Choice 1",
+          "Answer Choice 2",
+          "Answer Choice 3"
+        ],
+        "correctAnswer": 2,
+        "explanation": "Explanation of Question 3"
+      }
+    ]
+  },
+  {
+    "id": "YYYYMMDD-Company Name",
+    "date": "2024-03-23",
+    "title": "Title of the Case",
+    "topic": "Accounting",
+    "caserace #":"1",
+    "snippet": "TEST Sentence fragment to draw them in...",
     "content": [
       "Paragraph 1 Text",
       "Paragraph 2 Text",
