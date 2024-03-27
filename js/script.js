@@ -21,6 +21,94 @@ document.addEventListener("DOMContentLoaded", () => {
     let totalAccuracyPoints = 0; // To track total accuracy points
     let totalSpeedPoints = 0; // To track total speed points
 
+    function displayPriorCases(cases) {
+        // Create the modal container
+        const modal = document.createElement('div');
+        modal.id = 'caseModal';
+        // Apply styles as needed or assign a class and define styles in your CSS
+    
+        // Create the close button
+        const closeButton = document.createElement('button');
+        closeButton.textContent = 'X';
+        // Position the close button, e.g., absolute position in the top right corner
+    
+        // Add click handler to close the modal
+        closeButton.onclick = () => modal.style.display = 'none';
+    
+        // Append the close button to the modal
+        modal.appendChild(closeButton);
+    
+       // Create the table headings
+        const table = document.createElement('table');
+        const thead = document.createElement('thead');
+        const headerRow = document.createElement('tr');
+        const headings = ['CaseRace #', 'Date', 'Topic', 'Score']; // Add 'Topic' to headings
+        headings.forEach(text => {
+            const th = document.createElement('th');
+            th.textContent = text;
+            headerRow.appendChild(th);
+        });
+        thead.appendChild(headerRow);
+        table.appendChild(thead);
+    
+        // Create the table body
+        const tbody = document.createElement('tbody');
+        cases.forEach((caseItem, index) => {
+            const tr = document.createElement('tr');
+        
+        // Caserace # Column
+        const tdCaseNumber = document.createElement('td');
+        tdCaseNumber.textContent = caseItem["caserace #"];  // Use the caserace # from the JSON
+
+        
+        // Date Column
+        const tdDate = document.createElement('td');
+        // Assuming the date is in 'YYYY-MM-DD' format
+        // If it's in 'YYYYMMDD' format, you'll need to insert the dashes as previously described
+        const dateParts = caseItem.date.split("-");
+        // Date.UTC(year, monthIndex [, day [, hour [, minute [, second [, millisecond]]]]])
+        // Month is 0-indexed (January is 0, February is 1, etc.), so subtract 1 from the month part
+        const date = new Date(Date.UTC(dateParts[0], dateParts[1] - 1, dateParts[2]));
+        tdDate.textContent = date.toLocaleDateString(undefined, { timeZone: 'UTC' });
+
+        // Topic Column
+        const tdTopic = document.createElement('td');
+        tdTopic.textContent = caseItem.topic; // Get the topic from the caseItem
+        
+        // Score Column
+        const tdScore = document.createElement('td');
+        tdScore.textContent = 'Play Now'; // Replace with actual score if available
+        
+        // Append all the td elements to the row
+        tr.appendChild(tdCaseNumber);
+        tr.appendChild(tdDate);
+        tr.appendChild(tdTopic);
+        tr.appendChild(tdScore);
+        
+        // Clicking on a row should load the case
+        tr.onclick = () => {
+            currentCase = caseItem;
+            initializeCase();
+            modal.style.display = 'none';
+            // Reset UI to case introduction view
+            // ...
+        };
+    
+            tbody.appendChild(tr);
+        });
+        table.appendChild(tbody);
+    
+        modal.appendChild(table);
+
+        // Show the modal
+        modal.style.display = 'block';
+    
+        // Append the modal to the document body
+        document.body.appendChild(modal);
+    }
+
+
+
     // Fetch the cases from the JSON file
     fetch('data/cases.json')
         .then(response => response.json())
@@ -221,7 +309,7 @@ document.addEventListener("DOMContentLoaded", () => {
     
         // Leaderboard title
         const leaderboardTitle = document.createElement("h1");
-        leaderboardTitle.textContent = "LEADERBOARD";
+        leaderboardTitle.textContent = "TIME TRIAL RESULTS";
         resultsSection.appendChild(leaderboardTitle);
     
         let totalCompositeScore = 0;
@@ -253,6 +341,8 @@ document.addEventListener("DOMContentLoaded", () => {
        // const separatorAfterScore = document.createElement("hr");
         //resultsSection.appendChild(separatorAfterScore);
     
+        
+
         // 'Show Prior Cases' button
         const showPriorCasesBtn = document.createElement("button");
         showPriorCasesBtn.id = "showPriorCasesBtn";
@@ -260,6 +350,17 @@ document.addEventListener("DOMContentLoaded", () => {
         showPriorCasesBtn.textContent = "Access Prior CaseRaces";
         resultsSection.appendChild(showPriorCasesBtn);
     
+        showPriorCasesBtn.addEventListener('click', () => {
+            fetch('data/cases.json')
+                .then(response => response.json())
+                .then(data => {
+                    const sortedCases = data.sort((a, b) => b.date.localeCompare(a.date));
+                    displayPriorCases(sortedCases);
+                })
+                .catch(error => console.error('Error loading cases:', error));
+        });
+        
+
         // 'Show Answers and Explanations' button
         const showAnswersBtn = document.createElement("button");
         showAnswersBtn.id = "showAnswersBtn"; // You can keep the ID if you need it for other specific purposes
@@ -336,8 +437,10 @@ document.addEventListener("DOMContentLoaded", () => {
         document.body.appendChild(popup);
     }
     
+  
     
     
+      
 
       // updateQuestionAndAnswers(0);
 });
