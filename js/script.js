@@ -89,7 +89,7 @@ document.addEventListener("DOMContentLoaded", () => {
         // Append the close button to the modal
         modal.appendChild(closeButton);
     
-       // Create the table headings
+        // Create the table headings
         const table = document.createElement('table');
         const thead = document.createElement('thead');
         const headerRow = document.createElement('tr');
@@ -106,83 +106,79 @@ document.addEventListener("DOMContentLoaded", () => {
         const tbody = document.createElement('tbody');
         cases.forEach((caseItem, index) => {
             const tr = document.createElement('tr');
-        
-        // Caserace # Column
-        const tdCaseNumber = document.createElement('td');
-        tdCaseNumber.textContent = caseItem["caserace #"];  // Use the caserace # from the JSON
-
-        
-        // Date Column
-        const tdDate = document.createElement('td');
-        // Assuming the date is in 'YYYY-MM-DD' format
-        // If it's in 'YYYYMMDD' format, you'll need to insert the dashes as previously described
-        const dateParts = caseItem.date.split("-");
-        // Date.UTC(year, monthIndex [, day [, hour [, minute [, second [, millisecond]]]]])
-        // Month is 0-indexed (January is 0, February is 1, etc.), so subtract 1 from the month part
-        const date = new Date(Date.UTC(dateParts[0], dateParts[1] - 1, dateParts[2]));
-        tdDate.textContent = date.toLocaleDateString(undefined, { timeZone: 'UTC' });
-
-        // Topic Column
-        const tdTopic = document.createElement('td');
-        tdTopic.textContent = caseItem.topic; // Get the topic from the caseItem
-        
-        // Score Column
-        const tdScore = document.createElement('td');
-        const playButton = document.createElement('button');
-        playButton.textContent = 'Play Now';
-        playButton.addEventListener('click', () => {
-            modal.style.display = 'none'; // Hide the modal before starting the game
-            playCase(caseItem); // Start the game with the selected case
-        });
-        tdScore.appendChild(playButton);
-
-
-              
-        // Append all the td elements to the row
-        tr.appendChild(tdCaseNumber);
-        tr.appendChild(tdDate);
-        tr.appendChild(tdTopic);
-        tr.appendChild(tdScore);
-        
-        // Clicking on a row should load the case
-        tr.onclick = () => {
-            clearTimeout(caseTimerId); // Clear the case timer before initializing a new case
-            currentCase = caseItem;
-            initializeCase();
-            modal.style.display = 'none';
-            caseSection.style.display = "block";
-            questionSection.style.display = "none"; // Ensure questions are hidden until the case starts
+    
+            // Caserace # Column
+            const tdCaseNumber = document.createElement('td');
+            tdCaseNumber.textContent = caseItem["caserace #"];  // Use the caserace # from the JSON
+    
+            // Date Column
+            const tdDate = document.createElement('td');
+            const dateParts = caseItem.date.split("-");
+            const date = new Date(Date.UTC(dateParts[0], dateParts[1] - 1, dateParts[2]));
+            tdDate.textContent = date.toLocaleDateString(undefined, { timeZone: 'UTC' });
+    
+            // Topic Column
+            const tdTopic = document.createElement('td');
+            tdTopic.textContent = caseItem.topic; // Get the topic from the caseItem
             
-            // Reset the case progress bar to start the animation
-            const progressBar = document.getElementById('progressBar');
-            progressBar.style.width = '0%'; // Set the width to 0 to reset the progress bar
-        
-            // This will start the transition of filling up the progress bar over 90 seconds
-            setTimeout(() => {
-                progressBar.style.width = '100%'; // This will trigger the CSS transition to start
-            }, 10); // Set a short timeout to ensure the transition starts after resetting the width to 0%
-        
-            // Start the case timer for the new case
-            caseTimerId = setTimeout(() => {
-                transitionToQuestions(); // This line replaces the placeholder comment
-            }, 90000);
-        };
-        
-        
-        
+            // Score Column
+            const tdScore = document.createElement('td');
+            const score = localStorage.getItem('score_' + caseItem["caserace #"]);
+            if (score) {
+                tdScore.textContent = score;
+            } else {
+                const playButton = document.createElement('button');
+                playButton.textContent = 'Play Now';
+                playButton.addEventListener('click', () => {
+                    modal.style.display = 'none'; // Hide the modal before starting the game
+                    playCase(caseItem); // Start the game with the selected case
+                });
+                tdScore.appendChild(playButton);
+            }
+    
+            // Append all the td elements to the row
+            tr.appendChild(tdCaseNumber);
+            tr.appendChild(tdDate);
+            tr.appendChild(tdTopic);
+            tr.appendChild(tdScore);
+    
+            // Clicking on a row should load the case
+            tr.onclick = () => {
+                clearTimeout(caseTimerId); // Clear the case timer before initializing a new case
+                currentCase = caseItem;
+                initializeCase();
+                modal.style.display = 'none';
+                caseSection.style.display = "block";
+                questionSection.style.display = "none"; // Ensure questions are hidden until the case starts
+                
+                // Reset the case progress bar to start the animation
+                const progressBar = document.getElementById('progressBar');
+                progressBar.style.width = '0%'; // Set the width to 0 to reset the progress bar
+            
+                // Start the progress bar animation over 90 seconds
+                setTimeout(() => {
+                    progressBar.style.width = '100%'; // Trigger the CSS transition
+                }, 10);
+            
+                // Start the case timer for the new case
+                caseTimerId = setTimeout(() => {
+                    transitionToQuestions();
+                }, 90000);
+            };
     
             tbody.appendChild(tr);
         });
         table.appendChild(tbody);
     
         modal.appendChild(table);
-
+    
         // Show the modal
         modal.style.display = 'block';
     
         // Append the modal to the document body
         document.body.appendChild(modal);
     }
+    
 
    // You can call this function to start the progress bar animation when a new case is selected
         function startProgressBarAnimation() {
@@ -416,6 +412,8 @@ document.addEventListener("DOMContentLoaded", () => {
             totalCompositeScore += validAccuracyPoints + validSpeedPoints;
         });
     
+        saveScore(currentCase["caserace #"], totalCompositeScore.toFixed(2));
+
         const totalScoreElement = document.createElement("p");
         totalScoreElement.textContent = `CaseRace Composite Score: ${totalCompositeScore.toFixed(2)}`;
         resultsSection.appendChild(totalScoreElement);
@@ -520,7 +518,13 @@ document.addEventListener("DOMContentLoaded", () => {
         document.body.appendChild(popup);
     }
     
-  
+    function saveScore(caseId, score) {
+        localStorage.setItem('score_' + caseId, score);
+    }
+    
+    function loadScore(caseId) {
+        return localStorage.getItem('score_' + caseId);
+    }
     
     
       
