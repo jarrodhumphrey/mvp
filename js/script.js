@@ -21,6 +21,57 @@ document.addEventListener("DOMContentLoaded", () => {
     let totalAccuracyPoints = 0; // To track total accuracy points
     let totalSpeedPoints = 0; // To track total speed points
 
+    function playCase(caseData) {
+        clearTimeout(caseTimerId); // Clear any existing case timers
+        
+        // Reset game state
+        currentQuestionNumber = 0;
+        userAnswers = [];
+        questionStartTimes = []; // Reset the start times for each question
+        totalAccuracyPoints = 0; // Reset accuracy points
+        totalSpeedPoints = 0; // Reset speed points
+    
+        // Set the current case to the selected one
+        currentCase = caseData;
+    
+        // Initialize the game with the new case
+        initializeCase();
+        
+        // Start the game
+        startGame();
+    }
+
+    // This function should handle starting the game both for new and old cases
+    function startGame() {
+        // Reset UI for both new and old cases
+        introSection.style.display = "none";
+        caseSection.style.display = "block";
+        questionSection.style.display = "none"; // Hide question section initially
+        resultsSection.style.display = "none";
+        resetProgressBar(); // Reset progress bar for the case timer
+        
+        // Show 'proceed to questions' button after a delay for both new and old cases
+        setTimeout(function() {
+            proceedToQuestions.style.display = "block";
+        }, 500);
+
+        // Start the case timer and progress bar animation
+        startProgressBarAnimation(90);
+        caseTimerId = setTimeout(() => {
+            transitionToQuestions();
+        }, 90000);
+    }
+
+    // This function transitions to the questions view
+    function transitionToQuestions() {
+        caseSection.style.display = "none";
+        resetTimer();
+        questionSection.style.display = "block";
+        currentQuestionNumber = 0;
+        updateQuestionAndAnswers(currentCase.questions[currentQuestionNumber]);
+        startQuestionTimer();
+    }
+
     function displayPriorCases(cases) {
         // Create the modal container
         const modal = document.createElement('div');
@@ -77,8 +128,16 @@ document.addEventListener("DOMContentLoaded", () => {
         
         // Score Column
         const tdScore = document.createElement('td');
-        tdScore.textContent = 'Play Now'; // Replace with actual score if available
-        
+        const playButton = document.createElement('button');
+        playButton.textContent = 'Play Now';
+        playButton.addEventListener('click', () => {
+            modal.style.display = 'none'; // Hide the modal before starting the game
+            playCase(caseItem); // Start the game with the selected case
+        });
+        tdScore.appendChild(playButton);
+
+
+              
         // Append all the td elements to the row
         tr.appendChild(tdCaseNumber);
         tr.appendChild(tdDate);
@@ -87,12 +146,30 @@ document.addEventListener("DOMContentLoaded", () => {
         
         // Clicking on a row should load the case
         tr.onclick = () => {
+            clearTimeout(caseTimerId); // Clear the case timer before initializing a new case
             currentCase = caseItem;
             initializeCase();
             modal.style.display = 'none';
-            // Reset UI to case introduction view
-            // ...
+            caseSection.style.display = "block";
+            questionSection.style.display = "none"; // Ensure questions are hidden until the case starts
+            
+            // Reset the case progress bar to start the animation
+            const progressBar = document.getElementById('progressBar');
+            progressBar.style.width = '0%'; // Set the width to 0 to reset the progress bar
+        
+            // This will start the transition of filling up the progress bar over 90 seconds
+            setTimeout(() => {
+                progressBar.style.width = '100%'; // This will trigger the CSS transition to start
+            }, 10); // Set a short timeout to ensure the transition starts after resetting the width to 0%
+        
+            // Start the case timer for the new case
+            caseTimerId = setTimeout(() => {
+                transitionToQuestions(); // This line replaces the placeholder comment
+            }, 90000);
         };
+        
+        
+        
     
             tbody.appendChild(tr);
         });
@@ -107,7 +184,16 @@ document.addEventListener("DOMContentLoaded", () => {
         document.body.appendChild(modal);
     }
 
+   // You can call this function to start the progress bar animation when a new case is selected
+        function startProgressBarAnimation() {
+            const progressBar = document.getElementById('progressBar');
+            progressBar.style.width = '0%'; // Reset the progress bar
 
+            // Use a very short delay before starting the animation to ensure the transition is triggered
+            setTimeout(() => {
+                progressBar.style.width = '100%'; // Start the progress bar animation
+            }, 10); // The delay needs to be long enough to ensure the 'width' change is recognized
+        }
 
     // Fetch the cases from the JSON file
     fetch('data/cases.json')
@@ -141,6 +227,7 @@ document.addEventListener("DOMContentLoaded", () => {
         
             // Prepare the case content to be shown after clicking the start button
             const caseContentDiv = document.getElementById("caseContent");
+            caseContentDiv.innerHTML = ''; // Clear out any existing content
              currentCase.content.forEach((paragraph, index) => {
                 const p = document.createElement("p");
                 p.textContent = paragraph;
@@ -337,11 +424,7 @@ document.addEventListener("DOMContentLoaded", () => {
         totalTimeElement.textContent = `Total Time: ${totalTime.toFixed(2)} seconds`;
         resultsSection.appendChild(totalTimeElement);
     
-        // Horizontal bar separator
-       // const separatorAfterScore = document.createElement("hr");
-        //resultsSection.appendChild(separatorAfterScore);
-    
-        
+          
 
         // 'Show Prior Cases' button
         const showPriorCasesBtn = document.createElement("button");
