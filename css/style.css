@@ -188,3 +188,10 @@ h1 {
     background-color: #04AA6D;
     color: white;
 }
+
+.clickable-score {
+    font-weight: bold;
+    color: green;
+    text-decoration: underline;
+    cursor: pointer;
+}
