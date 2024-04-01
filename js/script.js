@@ -109,7 +109,7 @@ document.addEventListener("DOMContentLoaded", () => {
     
             // Caserace # Column
             const tdCaseNumber = document.createElement('td');
-            tdCaseNumber.textContent = caseItem["caserace #"];  // Use the caserace # from the JSON
+            tdCaseNumber.textContent = caseItem["caserace #"]; // Use the caserace # from the JSON
     
             // Date Column
             const tdDate = document.createElement('td');
@@ -121,18 +121,20 @@ document.addEventListener("DOMContentLoaded", () => {
             const tdTopic = document.createElement('td');
             tdTopic.textContent = caseItem.topic; // Get the topic from the caseItem
             
-            // Score Column
+           // Score/Play Now Column
             const tdScore = document.createElement('td');
             const score = localStorage.getItem('score_' + caseItem["caserace #"]);
-            if (score) {
+            if (score !== null) {
                 tdScore.textContent = score;
             } else {
+                // Only append the Play Now button if the score doesn't exist
                 const playButton = document.createElement('button');
                 playButton.textContent = 'Play Now';
-                playButton.addEventListener('click', () => {
+                playButton.onclick = (event) => {
+                    event.stopPropagation(); // Stop the click event from propagating to the parent elements
                     modal.style.display = 'none'; // Hide the modal before starting the game
                     playCase(caseItem); // Start the game with the selected case
-                });
+                };
                 tdScore.appendChild(playButton);
             }
     
@@ -142,30 +144,7 @@ document.addEventListener("DOMContentLoaded", () => {
             tr.appendChild(tdTopic);
             tr.appendChild(tdScore);
     
-            // Clicking on a row should load the case
-            tr.onclick = () => {
-                clearTimeout(caseTimerId); // Clear the case timer before initializing a new case
-                currentCase = caseItem;
-                initializeCase();
-                modal.style.display = 'none';
-                caseSection.style.display = "block";
-                questionSection.style.display = "none"; // Ensure questions are hidden until the case starts
-                
-                // Reset the case progress bar to start the animation
-                const progressBar = document.getElementById('progressBar');
-                progressBar.style.width = '0%'; // Set the width to 0 to reset the progress bar
-            
-                // Start the progress bar animation over 90 seconds
-                setTimeout(() => {
-                    progressBar.style.width = '100%'; // Trigger the CSS transition
-                }, 10);
-            
-                // Start the case timer for the new case
-                caseTimerId = setTimeout(() => {
-                    transitionToQuestions();
-                }, 90000);
-            };
-    
+            // Append the row to the table body
             tbody.appendChild(tr);
         });
         table.appendChild(tbody);
@@ -178,6 +157,7 @@ document.addEventListener("DOMContentLoaded", () => {
         // Append the modal to the document body
         document.body.appendChild(modal);
     }
+    
     
 
    // You can call this function to start the progress bar animation when a new case is selected
@@ -410,17 +390,31 @@ document.addEventListener("DOMContentLoaded", () => {
             resultsSection.appendChild(questionResult);
     
             totalCompositeScore += validAccuracyPoints + validSpeedPoints;
-        });
-    
-        saveScore(currentCase["caserace #"], totalCompositeScore.toFixed(2));
 
-        const totalScoreElement = document.createElement("p");
-        totalScoreElement.textContent = `CaseRace Composite Score: ${totalCompositeScore.toFixed(2)}`;
-        resultsSection.appendChild(totalScoreElement);
+            
+        });
     
         const totalTimeElement = document.createElement("p");
         totalTimeElement.textContent = `Total Time: ${totalTime.toFixed(2)} seconds`;
         resultsSection.appendChild(totalTimeElement);
+
+        saveScore(currentCase["caserace #"], totalCompositeScore.toFixed(2));
+
+        const totalScoreElement = document.createElement("p");
+        totalScoreElement.id = "compositeScore"; // Add an ID to the composite score element
+        totalScoreElement.textContent = `CaseRace Composite Score: ${totalCompositeScore.toFixed(2)}`;
+         // Add styling to make it look clickable
+        //totalScoreElement.style.fontWeight = 'bold';
+        //totalScoreElement.style.color = 'green';
+        //totalScoreElement.style.textDecoration = 'underline';
+       // totalScoreElement.style.cursor = 'pointer'; // Changes the cursor to indicate it's clickable
+       totalScoreElement.classList.add('clickable-score'); // Use the class you added in your CSS 
+       resultsSection.appendChild(totalScoreElement);
+        
+         // After appending the composite score element, call the new function to add the event listener
+        addCompositeScoreClickListener(); 
+
+   
     
           
 
@@ -518,6 +512,106 @@ document.addEventListener("DOMContentLoaded", () => {
         document.body.appendChild(popup);
     }
     
+    function addCompositeScoreClickListener() {
+        const compositeScoreElement = document.getElementById('compositeScore');
+        compositeScoreElement.addEventListener('click', function() {
+            const popup = document.createElement('div');
+            popup.id = 'scoreInfoPopup';
+            // Style the popup as necessary
+            popup.style = "position: fixed; top: 50%; left: 50%; transform: translate(-50%, -50%); \
+            background-color: white; padding: 20px; border: 2px solid black; z-index: 1000; \
+            max-height: 80%; overflow-y: auto; width: 80%; max-width: 600px; box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); \
+            font-family: Arial, sans-serif;";
+    
+            // Explanation header
+            const explanationHeader = document.createElement('h2');
+            explanationHeader.textContent = "Composite Score Calculation";
+            explanationHeader.style = "text-align: center; margin-bottom: 20px;";
+            popup.appendChild(explanationHeader);
+    
+            // Accuracy Points list
+            const accuracyPointsList = document.createElement('ul');
+            const accuracyPointsHeader = document.createElement('h3');
+            accuracyPointsHeader.textContent = "Accuracy Points Scoring:";
+            accuracyPointsList.appendChild(accuracyPointsHeader);
+    
+            const accuracyDescriptions = [
+                "Question 1 = 100 points",
+                "Question 2 = 125 points",
+                "Question 3 = 150 points"
+            ];
+    
+            accuracyDescriptions.forEach(text => {
+                const li = document.createElement('li');
+                li.textContent = text;
+                accuracyPointsList.appendChild(li);
+            });
+            popup.appendChild(accuracyPointsList);
+    
+            // Add user's accuracy points details
+            const userAccuracyDetails = document.createElement('p');
+            userAccuracyDetails.innerHTML = '<strong>Your Accuracy Scores:</strong><br>' +
+            'Question 1: ' + (userAnswers[0].correct ? 'Correct (100 points)' : 'Incorrect (0 points)') + '<br>' +
+            'Question 2: ' + (userAnswers[1].correct ? 'Correct (125 points)' : 'Incorrect (0 points)') + '<br>' +
+            'Question 3: ' + (userAnswers[2].correct ? 'Correct (150 points)' : 'Incorrect (0 points)');
+            popup.appendChild(userAccuracyDetails);
+
+            // Speed Points list
+            const speedPointsList = document.createElement('ul');
+            const speedPointsHeader = document.createElement('h3');
+            speedPointsHeader.textContent = "Speed Bonus Scoring:";
+            speedPointsList.appendChild(speedPointsHeader);
+    
+            const speedDescriptions = [
+                "The Speed Bonus is calculated based on how quickly the player answers each question. The faster the answer, the higher the Speed Bonus. The bonus is calculated using the time taken to answer the question and the level of question difficulty.",
+                 ];
+    
+            speedDescriptions.forEach(text => {
+                const li = document.createElement('li');
+                li.textContent = text;
+                speedPointsList.appendChild(li);
+            });
+            popup.appendChild(speedPointsList);
+            
+           // Add user's speed points details including the calculation
+            const userSpeedDetails = document.createElement('p');
+            userSpeedDetails.innerHTML = '<strong>Your Speed Bonus:</strong><br>' +
+            'Question 1: ' + (userAnswers[0].correct ? `(30 - ${userAnswers[0].lapTime}) * 1 = ${calculateSpeedPoints(userAnswers[0].lapTime, 0).toFixed(2)}` : '0') + ' points<br>' +
+            'Question 2: ' + (userAnswers[1].correct ? `(30 - ${userAnswers[1].lapTime}) * 1.25 = ${calculateSpeedPoints(userAnswers[1].lapTime, 1).toFixed(2)}` : '0') + ' points<br>' +
+            'Question 3: ' + (userAnswers[2].correct ? `(30 - ${userAnswers[2].lapTime}) * 1.5 = ${calculateSpeedPoints(userAnswers[2].lapTime, 2).toFixed(2)}` : '0') + ' points';
+            popup.appendChild(userSpeedDetails);
+
+            
+           // Add user's Composite Scoring calculation
+            const userTotalScoringDetails = document.createElement('p');
+            userTotalScoringDetails.innerHTML = '<strong>Your Total Composite Score:</strong><br>' +
+            'Question 1: ' + (userAnswers[0].correct ? '100 Accuracy Points + ' : '0 Accuracy Points + ') +
+            (userAnswers[0].correct ? calculateSpeedPoints(userAnswers[0].lapTime, 0).toFixed(2) : '0') + ' Speed Bonus = ' +
+            (userAnswers[0].correct ? (100 + calculateSpeedPoints(userAnswers[0].lapTime, 0)).toFixed(2) : '0') + ' Total Points<br>' +
+            'Question 2: ' + (userAnswers[1].correct ? '125 Accuracy Points + ' : '0 Accuracy Points + ') +
+            (userAnswers[1].correct ? calculateSpeedPoints(userAnswers[1].lapTime, 1).toFixed(2) : '0') + ' Speed Bonus = ' +
+            (userAnswers[1].correct ? (125 + calculateSpeedPoints(userAnswers[1].lapTime, 1)).toFixed(2) : '0') + ' Total Points<br>' +
+            'Question 3: ' + (userAnswers[2].correct ? '150 Accuracy Points + ' : '0 Accuracy Points + ') +
+            (userAnswers[2].correct ? calculateSpeedPoints(userAnswers[2].lapTime, 2).toFixed(2) : '0') + ' Speed Bonus = ' +
+            (userAnswers[2].correct ? (150 + calculateSpeedPoints(userAnswers[2].lapTime, 2)).toFixed(2) : '0') + ' Total Points';
+            popup.appendChild(userTotalScoringDetails);
+
+
+
+            // Close button for the popup
+            const closeButton = document.createElement('button');
+            closeButton.textContent = 'Close';
+            closeButton.style = "margin-top: 20px; padding: 10px 20px; font-size: 16px;";
+            closeButton.onclick = () => document.body.removeChild(popup);
+            popup.appendChild(closeButton);
+    
+            // Append the popup to the body
+            document.body.appendChild(popup);
+        });
+    }
+    
+    
+
     function saveScore(caseId, score) {
         localStorage.setItem('score_' + caseId, score);
     }
