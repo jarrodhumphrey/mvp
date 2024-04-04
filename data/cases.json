@@ -1,53 +1,60 @@
 [
   {
-    "id": "YYYYMMDD-Company Name",
+    "id": "20240328-Amazon",
     "date": "2024-03-28",
-    "title": "Dummy Title 6",
-    "topic": "Misc",
+    "title": "Amazon CaseRace",
+    "topic": "Acquisitions",
     "caserace #":"6",
-    "snippet": "TEST Sentence fragment to draw them in... 6",
-    "content": [
-      "Paragraph 1 Text 6",
-      "Paragraph 2 Text 6",
-      "Paragraph 3 Text 6"
+    "snippet": "In 2017, Amazon, a global leader in e-commerce, made a bold strategic move...",
+    "content":  [
+      "In 2017, Amazon, a global leader in e-commerce, made a bold strategic move by purchasing Whole Foods Market, a high-end supermarket chain known for its organic and natural food selections, for $13.7 billion. This was not just a simple expansion of business for Amazon but a significant step into the brick-and-mortar retail space, a domain it had only lightly touched upon previously. Amazon, predominantly an online retailer, faced the challenge of entering and establishing itself in the physical retail market. While it had mastered e-commerce, the company recognized the persistent value and market share of physical stores, especially in the grocery sector. To address this challenge, Amazon decided to leverage Whole Foods’ established brand and nationwide network of stores. This strategic purchase was important in multiple ways:",
+      "• Market Penetration: Whole Foods provided Amazon instant access to the physical grocery market with over 450 stores in prime locations.",
+      "• Brand Synergy: Whole Foods’ reputation for quality and sustainability aligned well with Amazon’s focus on customer satisfaction and innovation.",
+      "• Technology Integration: Amazon planned to integrate its technology to revolutionize the shopping experience, including implementing advanced inventory management and introducing cashier-less checkout systems.",
+      "• Data Acquisition: Owning Whole Foods enabled Amazon to gather valuable consumer data in offline shopping, complementing its vast online data resources.",
+      "Amazon’s purchase of Whole Foods offered a unique opportunity to bridge its online marketplace with physical retail spaces frequented by high-value shoppers. Over time Whole Foods stores became strategic checkpoints where Amazon customers could interact with Amazon.com in new ways. These included the convenient pickup and return of online orders, and even experiencing the benefits Amazon’s famous Prime Day through in-store only promotions. This integration aimed to enhance customer engagement, offering a seamless online-to-offline experience that leveraged the strengths of both Amazon’s digital presence and Whole Foods’ physical footprint."   
     ],
     "questions": [
       {
-        "text": "Text of Question 1 6",
+        "text": "________ describes when a company enters an agreement to purchase and control another company.",
         "options": [
-          "Answer Choice 1 6",
-          "Answer Choice 2 6",
-          "Answer Choice 3 6"
-        ],
-        "correctAnswer": 0,
-        "explanation": "Explanation of Question 1 6"
-      },
-      {
-        "text": "Text of Question 2 6",
-        "options": [
-          "Answer Choice 1 6",
-          "Answer Choice 2 6",
-          "Answer Choice 3 6"
-        ],
-        "correctAnswer": 1,
-        "explanation": "Explanation of Question 2 6"
-      },
-      {
-        "text": "Text of Question 3 6",
-        "options": [
-          "Answer Choice 1 6",
-          "Answer Choice 2 6",
-          "Answer Choice 3 6"
+          "Merger",
+          "Takeover",
+          "Acquisition"
         ],
         "correctAnswer": 2,
-        "explanation": "Explanation of Question 3 6"
+        "explanation": ["The term that describes when a company enters an agreement to purchase and control another company is Acquisition.",
+          "In the context of the case you've shared about Amazon's purchase of Whole Foods Market in 2017, this action is a clear example of an acquisition. Amazon, the acquiring company, entered into an agreement to purchase Whole Foods Market, thereby gaining control over the high-end supermarket chain. An acquisition is characterized by one company taking ownership of another company, which is exactly what happened when Amazon purchased Whole Foods for $13.7 billion. This strategic move allowed Amazon to significantly expand its footprint in the physical retail space, specifically within the grocery sector, complementing its dominant online retail presence."
+        ]
+      },
+      {
+        "text": "Which type of acquisition best describes Amazon’s purchase of Whole Foods in 2017?",
+        "options": [
+          "Horizontal Acquisition",
+          "Reverse Merger",
+          "Vertical Acquisition"
+        ],
+        "correctAnswer": 0,
+        "explanation": [
+          "Amazon's purchase of Whole Foods in 2017 is best described as a Horizontal Acquisition. A horizontal acquisition occurs when a company acquires another company that operates in the same industry or sector. This type of acquisition is often aimed at consolidating market position, expanding geographical reach, or achieving economies of scale. In the case of Amazon acquiring Whole Foods, both companies were operating in the retail sector, albeit in different channels—Amazon primarily in online retail and Whole Foods in physical grocery stores. The acquisition allowed Amazon to significantly expand its presence in the grocery retail market, a move that aligns with the characteristics of a horizontal acquisition. It was not a reverse merger, where a smaller firm takes over a larger one, nor was it a vertical acquisition, which would involve acquiring a company in the supply chain or distribution network. Instead, Amazon expanded its reach within the same retail industry, making it a clear example of a horizontal acquisition."
+        ]
+      },
+      {
+        "text": "Research suggests that approximately what percentage of strategic acquisitions are considered successful in the years following completion?",
+        "options": [
+          "60%",
+          "40%",
+          "20%"
+        ],
+        "correctAnswer": 2,
+        "explanation": "The success rate of strategic acquisitions varies widely across different studies and industries, but a commonly cited figure is that around 20% to 40% of acquisitions are considered successful in the years following completion. Many sources, including Harvard Business Review, suggest that a high percentage of mergers and acquisitions (M&As) fail to deliver on their expected value. The lower end of the success rate spectrum, around 20%, often reflects the challenges in achieving strategic goals, integrating cultures, realizing synergies, and maintaining customer and employee satisfaction post-acquisition."
       }
     ]
   },
   {
     "id": "20240224-Netflix",
     "date": "2024-03-27",
-    "title": "Netflix Case Test",
+    "title": "Netflix CaseRace",
     "topic": "Startups",
     "caserace #":"5",
     "snippet": "In the late 1990s, a startup named Netflix emerged...",
@@ -90,47 +97,49 @@
     ]
   },
   {
-    "id": "YYYYMMDD-Company Name",
+    "id": "20240326-Southwest",
     "date": "2024-03-26",
-    "title": "Title of the Case 4",
-    "topic": "Finance",
+    "title": "Southwest CaseRace",
+    "topic": "Organizational Behavior",
     "caserace #":"4",
-    "snippet": "TEST Sentence fragment to draw them in... 4",
+    "snippet": "Established in 1967, Southwest Airlines has evolved into a top low-cost carrier in the United States, a success largely attributed to its people-centric culture.",
     "content": [
-      "Paragraph 1 Text 4",
-      "Paragraph 2 Text 4",
-      "Paragraph 3 Text 4"
+      "Established in 1967, Southwest Airlines has evolved into a top low-cost carrier in the United States, a success largely attributed to its people-centric culture. This culture, echoing co-founder Herb Kelleher's belief that 'Your people come first, and if you treat them right, they'll treat the customers right,' places a strong emphasis on employee well-being. This focus not only fosters exceptional customer service but is also integral to Southwest's commitment to legendary hospitality and a renowned culture which are built on the following principals:",
+      "Ingrained Culture of Respect: Southwest fosters a culture of mutual care and respect, encouraging employees to embrace their authenticity and unique abilities, while upholding the company's commitment to the Golden Rule.",
+      "Comprehensive Employee Benefits: The airline provides a robust benefits package that includes health coverage, a 401(k) plan with company match, profit-sharing, and generous paid time off, reflecting its commitment to employee well-being.",
+      "Empowerment and Collaborative Labor Relations: Southwest emphasizes employee empowerment through career development opportunities and maintains a collaborative approach to labor relations, with 83% of its workforce represented by unions, ensuring positive outcomes for both the workforce and management.",
+      "Southwest Airlines' enduring corporate culture, emphasizing employee appreciation and legendary hospitality, has been pivotal to its remarkable success in the challenging low-margin airline industry. This approach fostered a 47-year streak of profitability, a standout achievement while other airlines faced bankruptcies and consolidations. Although the COVID-19 pandemic temporarily interrupted this streak, causing turmoil in the industry that led to the bankruptcy of 64 domestic carriers, Southwest swiftly recovered. In 2021, the airline reported a gross profit of $2.4 billion, which impressively climbed to $6.5 billion as pandemic restrictions lifted. Thanks to the dedication of its loyal employees, Southwest continues to progress towards its vision of being 'the world’s most loved, most efficient, and most profitable airline.'"
     ],
     "questions": [
       {
-        "text": "Text of Question 1 4",
+        "text": "Job Satisfaction is…",
         "options": [
-          "Answer Choice 1 4",
-          "Answer Choice 2 4",
-          "Answer Choice 3 4"
-        ],
-        "correctAnswer": 0,
-        "explanation": "Explanation of Question 1 4"
-      },
-      {
-        "text": "Text of Question 1 4",
-        "options": [
-          "Answer Choice 1 4",
-          "Answer Choice 2 4",
-          "Answer Choice 3 4"
+          "The financial compensation and benefits an employee receives from their job.",
+          "The level of fulfillment, contentment, and happiness an employee derives from their job.",
+          "The frequency of promotions and career advancements an employee experiences in their job."
         ],
         "correctAnswer": 1,
-        "explanation": "Explanation of Question 1 4"
+        "explanation": "Job satisfaction is all about the overall feeling of positivity an employee has about their work.  It's more than just money or getting ahead; it's a sense of enjoyment, purpose, and positive relationships within the work environment."
       },
       {
-        "text": "Text of Question 3 4",
+        "text": "Which of the following occurs when a job's demands, (responsibilities, tasks, deliverables), exceed its resources (compensation, time-off, and support)?",
         "options": [
-          "Answer Choice 1 4",
-          "Answer Choice 2 4",
-          "Answer Choice 3 4"
+          "Employee burnout",
+          "Stress-induced performance decline",
+          "Revered productivity"
+        ],
+        "correctAnswer": 0,
+        "explanation": "When employees constantly face more demands than they can reasonably address with their available resources, it leads to chronic stress and, ultimately, burnout. Burnout involves emotional exhaustion, cynicism, and a sense of professional failure."
+      },
+      {
+        "text": "Which of the following employee actions is indicative of a strong and healthy corporate culture within a company?",
+        "options": [
+          "Employee Driven Improvements (EDI)",
+          "Team Focused Cooperation (TFC)",
+          "Organizational Citizenship Behaviors (OCB)"
         ],
         "correctAnswer": 2,
-        "explanation": "Explanation of Question 3 4"
+        "explanation": "OCBs are voluntary actions employees take to help others and the organization beyond their formal job descriptions. Examples include mentoring, volunteering to help with projects, and taking initiative.  OCBs are a strong sign that employees feel invested in the company culture and want it to succeed."
       }
     ]
   },
