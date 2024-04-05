@@ -529,41 +529,39 @@ document.addEventListener("DOMContentLoaded", () => {
             explanationHeader.style = "text-align: center; margin-bottom: 20px;";
             popup.appendChild(explanationHeader);
     
-            // Accuracy Points list
-            const accuracyPointsList = document.createElement('ul');
+            // Keep the header for Accuracy Points
             const accuracyPointsHeader = document.createElement('h3');
-            accuracyPointsHeader.textContent = "Accuracy Points Scoring:";
-            accuracyPointsList.appendChild(accuracyPointsHeader);
-    
-            const accuracyDescriptions = [
-                "Question 1 = 100 points",
-                "Question 2 = 125 points",
-                "Question 3 = 150 points"
-            ];
-    
-            accuracyDescriptions.forEach(text => {
-                const li = document.createElement('li');
-                li.textContent = text;
-                accuracyPointsList.appendChild(li);
-            });
-            popup.appendChild(accuracyPointsList);
-    
+            accuracyPointsHeader.textContent = "Accuracy Points: Earn Points for Correct Answers";
+            popup.appendChild(accuracyPointsHeader);
+
+            // The bulleted list 'accuracyDescriptions' and its appending to the popup is removed
+
+            // Calculate total accuracy points
+            const totalAccuracyPoints = userAnswers.reduce((acc, answer, index) => {
+                return acc + (answer.correct ? [100, 125, 150][index] : 0);
+            }, 0);
+
+            // Calculate total speed points
+            const totalSpeedPoints = userAnswers.reduce((acc, answer, index) => {
+                return acc + (answer.correct ? calculateSpeedPoints(answer.lapTime, index) : 0);
+            }, 0);
+
             // Add user's accuracy points details
             const userAccuracyDetails = document.createElement('p');
-            userAccuracyDetails.innerHTML = '<strong>Your Accuracy Scores:</strong><br>' +
-            'Question 1: ' + (userAnswers[0].correct ? 'Correct (100 points)' : 'Incorrect (0 points)') + '<br>' +
-            'Question 2: ' + (userAnswers[1].correct ? 'Correct (125 points)' : 'Incorrect (0 points)') + '<br>' +
-            'Question 3: ' + (userAnswers[2].correct ? 'Correct (150 points)' : 'Incorrect (0 points)');
+            userAccuracyDetails.innerHTML = `<strong>Your Accuracy Scores: ${totalAccuracyPoints}</strong><br>` +
+            'Question 1: ' + (userAnswers[0].correct ? 'Correct (100 out of 100 points)' : 'Incorrect (0 out of 100 points)') + '<br>' +
+            'Question 2: ' + (userAnswers[1].correct ? 'Correct (125 out of 125 points)' : 'Incorrect (0 out of 125 points)') + '<br>' +
+            'Question 3: ' + (userAnswers[2].correct ? 'Correct (150 out of 150 points)' : 'Incorrect (0 out of 150 points)');
             popup.appendChild(userAccuracyDetails);
 
             // Speed Points list
             const speedPointsList = document.createElement('ul');
             const speedPointsHeader = document.createElement('h3');
-            speedPointsHeader.textContent = "Speed Bonus Scoring:";
+            speedPointsHeader.textContent = "Speed Bonus: Bonus Points for Fast Answers";
             speedPointsList.appendChild(speedPointsHeader);
     
             const speedDescriptions = [
-                "The Speed Bonus is calculated based on how quickly the player answers each question. The faster the answer, the higher the Speed Bonus. The bonus is calculated using the time taken to answer the question and the level of question difficulty.",
+          //      "The Speed Bonus is calculated based on how quickly the player answers each question. The faster the answer, the higher the Speed Bonus. The bonus is calculated using the time taken to answer the question and the level of question difficulty.",
                  ];
     
             speedDescriptions.forEach(text => {
@@ -575,16 +573,22 @@ document.addEventListener("DOMContentLoaded", () => {
             
            // Add user's speed points details including the calculation
             const userSpeedDetails = document.createElement('p');
-            userSpeedDetails.innerHTML = '<strong>Your Speed Bonus:</strong><br>' +
+            userSpeedDetails.innerHTML = `<strong>Your Speed Bonus: ${totalSpeedPoints.toFixed(2)}</strong><br>` +
             'Question 1: ' + (userAnswers[0].correct ? `(30 - ${userAnswers[0].lapTime}) * 1 = ${calculateSpeedPoints(userAnswers[0].lapTime, 0).toFixed(2)}` : '0') + ' points<br>' +
             'Question 2: ' + (userAnswers[1].correct ? `(30 - ${userAnswers[1].lapTime}) * 1.25 = ${calculateSpeedPoints(userAnswers[1].lapTime, 1).toFixed(2)}` : '0') + ' points<br>' +
             'Question 3: ' + (userAnswers[2].correct ? `(30 - ${userAnswers[2].lapTime}) * 1.5 = ${calculateSpeedPoints(userAnswers[2].lapTime, 2).toFixed(2)}` : '0') + ' points';
             popup.appendChild(userSpeedDetails);
 
-            
-           // Add user's Composite Scoring calculation
+      // Calculate total composite score based on user answers
+            let totalCompositeScore = userAnswers.reduce((acc, answer, index) => {
+                const accuracyPoints = answer.correct ? [100, 125, 150][index] : 0; // Adjust these values as necessary
+                const speedPoints = answer.correct ? calculateSpeedPoints(answer.lapTime, index) : 0;
+                return acc + accuracyPoints + speedPoints;
+            }, 0);
+
+            // Add user's Composite Scoring calculation
             const userTotalScoringDetails = document.createElement('p');
-            userTotalScoringDetails.innerHTML = '<strong>Your Total Composite Score:</strong><br>' +
+            userTotalScoringDetails.innerHTML = '<strong>Your Total Composite Score: ' + totalCompositeScore.toFixed(2) + '</strong><br>' +
             'Question 1: ' + (userAnswers[0].correct ? '100 Accuracy Points + ' : '0 Accuracy Points + ') +
             (userAnswers[0].correct ? calculateSpeedPoints(userAnswers[0].lapTime, 0).toFixed(2) : '0') + ' Speed Bonus = ' +
             (userAnswers[0].correct ? (100 + calculateSpeedPoints(userAnswers[0].lapTime, 0)).toFixed(2) : '0') + ' Total Points<br>' +
@@ -595,6 +599,12 @@ document.addEventListener("DOMContentLoaded", () => {
             (userAnswers[2].correct ? calculateSpeedPoints(userAnswers[2].lapTime, 2).toFixed(2) : '0') + ' Speed Bonus = ' +
             (userAnswers[2].correct ? (150 + calculateSpeedPoints(userAnswers[2].lapTime, 2)).toFixed(2) : '0') + ' Total Points';
             popup.appendChild(userTotalScoringDetails);
+
+            // Assuming userAnswers is an array with user's answers and calculateSpeedPoints is a function
+            // that calculates speed points based on lap time and question index
+
+            // The rest of the popup content (userAccuracyDetails and userSpeedDetails) remains unchanged
+
 
 
 
