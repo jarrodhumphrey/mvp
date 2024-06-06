@@ -1,0 +1,5 @@
+Add all changed files to staging: git add .
+
+Commit your changes: git commit -m "Your commit message"
+
+If you have already set the upstream for the experimental-branch, you can just use: git push
