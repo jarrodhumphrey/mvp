@@ -1,5 +1,8 @@
 document.addEventListener("DOMContentLoaded", () => {
-    // DOM elements
+    // Initialize synthetic scores for percentile calculations
+    initializeSimulatedScores();
+
+    // Retrieve DOM elements
     const startButton = document.getElementById("startButton");
     const introSection = document.getElementById("introSection");
     const caseSection = document.getElementById("caseSection");
@@ -7,7 +10,6 @@ document.addEventListener("DOMContentLoaded", () => {
     const questionNumberHeader = document.getElementById("questionNumber");
     const questionProgressBar = document.getElementById("questionProgressBar");
     const resultsSection = document.getElementById("resultsSection");
-    
     
     // State variables
     let currentCase = null;
@@ -363,90 +365,145 @@ document.addEventListener("DOMContentLoaded", () => {
         questionProgressBar.classList.add('active');
     }
 
-    function showResults() {
-        // Clear timers
-        clearTimeout(caseTimerId);
-        clearTimeout(questionTransitionTimerId);
-        questionSection.style.display = "none";
-        resultsSection.innerHTML = "";
-    
-        // Leaderboard title
-        const leaderboardTitle = document.createElement("h1");
-        leaderboardTitle.textContent = "TIME TRIAL RESULTS";
-        resultsSection.appendChild(leaderboardTitle);
-    
-        let totalCompositeScore = 0;
-        let totalTime = 0; // Initialize total time
-    
-        userAnswers.forEach((answer, index) => {
-            const validAccuracyPoints = Number.isFinite(answer.accuracyPoints) ? answer.accuracyPoints : 0;
-            const validSpeedPoints = Number.isFinite(answer.speedPoints) ? answer.speedPoints : 0;
-    
-            const lapTimeInSeconds = parseFloat(answer.lapTime);
-            totalTime += lapTimeInSeconds; // Sum lap times
-    
-            const questionResult = document.createElement("p");
-            questionResult.innerHTML = `Q${index + 1}:<br>Lap Time: ${answer.lapTime} seconds<br>Accuracy: ${validAccuracyPoints},<br>Speed Bonus: ${validSpeedPoints.toFixed(2)}.`;
-            resultsSection.appendChild(questionResult);
-    
-            totalCompositeScore += validAccuracyPoints + validSpeedPoints;
-
-            
-        });
-    
-        const totalTimeElement = document.createElement("p");
-        totalTimeElement.textContent = `Total Time: ${totalTime.toFixed(2)} seconds`;
-        resultsSection.appendChild(totalTimeElement);
-
-        saveScore(currentCase["caserace #"], totalCompositeScore.toFixed(2));
-
-        const totalScoreElement = document.createElement("p");
-        totalScoreElement.id = "compositeScore"; // Add an ID to the composite score element
-        totalScoreElement.textContent = `CaseRace Composite Score: ${totalCompositeScore.toFixed(2)}`;
-         // Add styling to make it look clickable
-        //totalScoreElement.style.fontWeight = 'bold';
-        //totalScoreElement.style.color = 'green';
-        //totalScoreElement.style.textDecoration = 'underline';
-       // totalScoreElement.style.cursor = 'pointer'; // Changes the cursor to indicate it's clickable
-       totalScoreElement.classList.add('clickable-score'); // Use the class you added in your CSS 
-       resultsSection.appendChild(totalScoreElement);
-        
-         // After appending the composite score element, call the new function to add the event listener
-        addCompositeScoreClickListener(); 
-
-   
-    
-          
-
-        // 'Show Prior Cases' button
-        const showPriorCasesBtn = document.createElement("button");
-        showPriorCasesBtn.id = "showPriorCasesBtn";
-        showPriorCasesBtn.classList.add("caseRaceButton"); // Apply the shared style class
-        showPriorCasesBtn.textContent = "Access Prior CaseRaces";
-        resultsSection.appendChild(showPriorCasesBtn);
-    
-        showPriorCasesBtn.addEventListener('click', () => {
-            fetch('data/cases.json')
-                .then(response => response.json())
-                .then(data => {
-                    const sortedCases = data.sort((a, b) => b.date.localeCompare(a.date));
-                    displayPriorCases(sortedCases);
-                })
-                .catch(error => console.error('Error loading cases:', error));
-        });
-        
-
-        // 'Show Answers and Explanations' button
-        const showAnswersBtn = document.createElement("button");
-        showAnswersBtn.id = "showAnswersBtn"; // You can keep the ID if you need it for other specific purposes
-        showAnswersBtn.classList.add("caseRaceButton"); // Apply the shared style class
-        showAnswersBtn.textContent = "Show Answers and Explanations";
-        resultsSection.appendChild(showAnswersBtn);
-        showAnswersBtn.addEventListener("click", () => showAnswersPopup(userAnswers, currentCase));
-            
-        resultsSection.style.display = "block";
+// Function to initialize simulated scores once or as needed
+function initializeSimulatedScores() {
+    let simulatedScores = JSON.parse(localStorage.getItem('allScores'));
+    if (!simulatedScores) {
+        simulatedScores = [];
+        // Generate 100 random scores between a plausible range, e.g., 100 to 487.5
+        for (let i = 0; i < 100; i++) {
+            simulatedScores.push(Math.floor(Math.random() * (487.5 - 100 + 1) + 100));
+        }
+        // Save these scores to local storage
+        localStorage.setItem('allScores', JSON.stringify(simulatedScores));
     }
+}
+
+
+// Function to save a new score into the local storage
+function saveScore(score) {
+    // Retrieve the existing scores array, or initialize a new one if it doesn't exist
+    let scores = JSON.parse(localStorage.getItem('allScores'));
+    if (!scores) {
+        scores = [];
+    }
+    // Append the new score
+    scores.push(score);
+    // Save the updated array back to local storage
+    localStorage.setItem('allScores', JSON.stringify(scores));
+}
+
+// Function to retrieve scores ensures it always returns an array
+function getScores() {
+    const scores = JSON.parse(localStorage.getItem('allScores'));
+    return scores || []; // Ensure this always returns an array, even if empty
+}
+
+// Function to calculate percentile based on current score and array of scores
+function calculatePercentile(currentScore, scores) {
+    if (!scores.length) return 0;
+    const numberOfScoresBelow = scores.filter(score => score < currentScore).length;
+    const percentile = (numberOfScoresBelow / scores.length) * 100;
+    return percentile.toFixed(2); // Return the percentile rounded to two decimal places
+}
+   // Function to display percentile results
+   function displayPercentileResults(score) {
+    const scores = getScores();
+    const percentile = calculatePercentile(score, scores);
+    const percentileDisplay = document.createElement("p");
+    percentileDisplay.textContent = `Your score is in the ${percentile} percentile of all scores.`;
+    resultsSection.insertBefore(percentileDisplay, resultsSection.firstChild);
+}
+
+function showResults() {
+    // Clear any active timers
+    clearTimeout(caseTimerId);
+    clearTimeout(questionTransitionTimerId);
+
+    // Hide the question section and clear previous results
+    questionSection.style.display = "none";
+    resultsSection.innerHTML = "";
+
+    // Create and append the leaderboard title
+    const leaderboardTitle = document.createElement("h1");
+    leaderboardTitle.textContent = "TIME TRIAL RESULTS!";
+    resultsSection.appendChild(leaderboardTitle);
+
+    // Initialize variables to calculate scores and time
+    let totalCompositeScore = 0;
+    let totalTime = 0;
+
+    // Process each answer and display results
+    userAnswers.forEach((answer, index) => {
+        const validAccuracyPoints = Number.isFinite(answer.accuracyPoints) ? answer.accuracyPoints : 0;
+        const validSpeedPoints = Number.isFinite(answer.speedPoints) ? answer.speedPoints : 0;
+
+        const lapTimeInSeconds = parseFloat(answer.lapTime);
+        totalTime += lapTimeInSeconds; // Sum lap times
+
+        const questionResult = document.createElement("p");
+        questionResult.innerHTML = `Q${index + 1}:<br>Lap Time: ${answer.lapTime} seconds<br>Accuracy: ${validAccuracyPoints},<br>Speed Bonus: ${validSpeedPoints.toFixed(2)}.`;
+        resultsSection.appendChild(questionResult);
+
+        totalCompositeScore += validAccuracyPoints + validSpeedPoints;
+    });
+
+    // Display total time
+    const totalTimeElement = document.createElement("p");
+    totalTimeElement.textContent = `Total Time: ${totalTime.toFixed(2)} seconds`;
+    resultsSection.appendChild(totalTimeElement);
+
+    // Save the total score
+    saveScore(currentCase["caserace #"], totalCompositeScore.toFixed(2));
+
+    // Display the composite score
+    const totalScoreElement = document.createElement("p");
+    totalScoreElement.id = "compositeScore";
+    totalScoreElement.textContent = `CaseRace Composite Score: ${totalCompositeScore.toFixed(2)}`;
+    totalScoreElement.classList.add('clickable-score');
+    resultsSection.appendChild(totalScoreElement);
+
+    // Calculate and display percentile ranking
+    const scores = JSON.parse(localStorage.getItem('allScores'));
+    const percentile = calculatePercentile(totalCompositeScore, scores);
+    const percentileDisplay = document.createElement("p");
+    percentileDisplay.textContent = `You scored in the ${parseInt(percentile)}th percentile!`;
+    resultsSection.appendChild(percentileDisplay);
+
+    // Attach an event listener to the composite score element
+    addCompositeScoreClickListener();
+
+    // Create and append the 'Access Prior CaseRaces' button
+    const showPriorCasesBtn = document.createElement("button");
+    showPriorCasesBtn.id = "showPriorCasesBtn";
+    showPriorCasesBtn.classList.add("caseRaceButton");
+    showPriorCasesBtn.textContent = "Access Prior CaseRaces";
+    resultsSection.appendChild(showPriorCasesBtn);
+
+    showPriorCasesBtn.addEventListener('click', () => {
+        fetch('data/cases.json')
+            .then(response => response.json())
+            .then(data => {
+                const sortedCases = data.sort((a, b) => b.date.localeCompare(a.date));
+                displayPriorCases(sortedCases);
+            })
+            .catch(error => console.error('Error loading cases:', error));
+    });
+
+    // Create and append the 'Show Answers and Explanations' button
+    const showAnswersBtn = document.createElement("button");
+    showAnswersBtn.id = "showAnswersBtn";
+    showAnswersBtn.classList.add("caseRaceButton");
+    showAnswersBtn.textContent = "Show Answers and Explanations";
+    resultsSection.appendChild(showAnswersBtn);
+    showAnswersBtn.addEventListener("click", () => showAnswersPopup(userAnswers, currentCase));
+
+    // Finally, make the results section visible
+    resultsSection.style.display = "block";
+}
+
     
+ 
     function showAnswersPopup(userAnswers, currentCase) {
         const popup = document.createElement("div");
         popup.id = "answersPopup";
