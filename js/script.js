@@ -414,6 +414,13 @@ function calculatePercentile(currentScore, scores) {
     resultsSection.insertBefore(percentileDisplay, resultsSection.firstChild);
 }
 
+function calculateTotalCompositeScore() {
+    return userAnswers.reduce((total, answer, index) => {
+        const accuracyPoints = answer.correct ? [100, 125, 150][index] : 0;
+        return total + accuracyPoints + answer.speedPoints;
+    }, 0);
+}
+
 function showResults() {
     // Clear any active timers
     clearTimeout(caseTimerId);
@@ -428,90 +435,30 @@ function showResults() {
     leaderboardTitle.textContent = "TIME TRIAL RESULTS!";
     resultsSection.appendChild(leaderboardTitle);
 
-    // Initialize variables to calculate scores and time
-    let totalCompositeScore = 0;
-    let totalTime = 0;
-
-    // Process each answer and display results
-    userAnswers.forEach((answer, index) => {
-        const validAccuracyPoints = Number.isFinite(answer.accuracyPoints) ? answer.accuracyPoints : 0;
-        const validSpeedPoints = Number.isFinite(answer.speedPoints) ? answer.speedPoints : 0;
-
-        const lapTimeInSeconds = parseFloat(answer.lapTime);
-        totalTime += lapTimeInSeconds; // Sum lap times
-
-        const questionResult = document.createElement("p");
-        questionResult.innerHTML = `Q${index + 1}:<br>Lap Time: ${answer.lapTime} seconds<br>Accuracy: ${validAccuracyPoints},<br>Speed Bonus: ${validSpeedPoints.toFixed(2)}.`;
-        resultsSection.appendChild(questionResult);
-
-        totalCompositeScore += validAccuracyPoints + validSpeedPoints;
-    });
-
-    function displayAiScores(aiScores) {
-        const scores = {...aiScores, "User": totalCompositeScore.toFixed(2)};
-        const sortedScores = Object.entries(scores).sort((a, b) => b[1] - a[1]);
-    
-        const scoreTable = document.createElement('table');
-        scoreTable.style.width = '50%';  // Makes the table narrower
-        scoreTable.style.margin = 'auto';  // Centers the table
-        scoreTable.innerHTML = '<tr><th>Participant</th><th>Score</th></tr>';
-    
-        sortedScores.forEach(([name, score]) => {
-            const row = document.createElement('tr');
-            const participantCell = document.createElement('td');
-            const scoreCell = document.createElement('td');
-            participantCell.textContent = name;
-            scoreCell.textContent = parseFloat(score).toFixed(2);  // Format score to two decimals
-    
-            // Check if the current row is for the User and apply styles
-            if (name === "User") {
-                participantCell.style.fontWeight = 'bold';
-                participantCell.style.color = 'green';
-                scoreCell.style.fontWeight = 'bold';
-                scoreCell.style.color = 'green';
-            }
-    
-            row.appendChild(participantCell);
-            row.appendChild(scoreCell);
-            scoreTable.appendChild(row);
-        });
-    
-        const resultsContainer = document.getElementById('resultsSection');
-        const header = document.createElement('h3');
-        header.textContent = "You vs. the Machines";
-        resultsContainer.appendChild(header);
-        resultsContainer.appendChild(scoreTable);
-    }
-    
-    
-
-
-    // Display total time
-    const totalTimeElement = document.createElement("p");
-    totalTimeElement.textContent = `Total Time: ${totalTime.toFixed(2)} seconds`;
-    resultsSection.appendChild(totalTimeElement);
+    // Calculate the total composite score
+    const totalCompositeScore = calculateTotalCompositeScore();
 
     // Save the total score
     saveScore(currentCase["caserace #"], totalCompositeScore.toFixed(2));
 
-    // Display the composite score
-    const totalScoreElement = document.createElement("p");
-    totalScoreElement.id = "compositeScore";
-    totalScoreElement.textContent = `CaseRace Composite Score: ${totalCompositeScore.toFixed(2)}`;
-    totalScoreElement.classList.add('clickable-score');
-    resultsSection.appendChild(totalScoreElement);
-
-    // Calculate and display percentile ranking
+    // Calculate percentile ranking
     const scores = JSON.parse(localStorage.getItem('allScores'));
     const percentile = calculatePercentile(totalCompositeScore, scores);
-    const percentileDisplay = document.createElement("p");
-    percentileDisplay.textContent = `You scored in the ${parseInt(percentile)}th percentile!`;
-    resultsSection.appendChild(percentileDisplay);
+
+    // Display composite score and percentile
+    const compositeScoreDisplay = document.createElement("p");
+    compositeScoreDisplay.innerHTML = `Your <span id="compositeScoreLink" style="color: green; text-decoration: underline; cursor: pointer;">CaseRace Composite Score of ${totalCompositeScore.toFixed(2)}</span> puts you in the ${parseInt(percentile)}th percentile of ${scores.length} fellow racers!`;
+    compositeScoreDisplay.style.fontWeight = 'bold';
+    resultsSection.appendChild(compositeScoreDisplay);
+
+    // Create and populate the results table
+    const resultsTable = createResultsTable();
+    resultsSection.appendChild(resultsTable);
 
     // Call displayAiScores with the AI scores from the current case
-    displayAiScores(currentCase.aiScores); // Ensure aiScores are properly structured in your case data
+    displayAiScores(currentCase.aiScores, totalCompositeScore); // Ensure aiScores are properly structured in your case data
 
-    // Attach an event listener to the composite score element
+    // Add the click listener for the score info button
     addCompositeScoreClickListener();
 
     // Create and append the 'Access Prior CaseRaces' button
@@ -543,7 +490,136 @@ function showResults() {
     resultsSection.style.display = "block";
 }
 
+function displayAiScores(aiScores, totalCompositeScore) {
+    const scores = {...aiScores, "User": totalCompositeScore.toFixed(2)};
+    const sortedScores = Object.entries(scores).sort((a, b) => b[1] - a[1]);
+
+    const scoreTable = document.createElement('table');
+    scoreTable.style.width = '50%';  // Makes the table narrower
+    scoreTable.style.margin = 'auto';  // Centers the table
+    scoreTable.innerHTML = '<tr><th>Participant</th><th>Score</th></tr>';
+
+    sortedScores.forEach(([name, score]) => {
+        const row = document.createElement('tr');
+        const participantCell = document.createElement('td');
+        const scoreCell = document.createElement('td');
+        participantCell.textContent = name;
+        scoreCell.textContent = parseFloat(score).toFixed(2);  // Format score to two decimals
+
+        // Check if the current row is for the User and apply styles
+        if (name === "User") {
+            participantCell.style.fontWeight = 'bold';
+            participantCell.style.color = 'green';
+            scoreCell.style.fontWeight = 'bold';
+            scoreCell.style.color = 'green';
+        }
+
+        row.appendChild(participantCell);
+        row.appendChild(scoreCell);
+        scoreTable.appendChild(row);
+    });
+
+    const resultsContainer = document.getElementById('resultsSection');
+    const header = document.createElement('h3');
+    header.textContent = "You vs. the Machines";
+    resultsContainer.appendChild(header); // Append the header after the table
+    resultsContainer.appendChild(scoreTable); // Append the score table first
     
+}
+
+function createResultsTable() {
+    const table = document.createElement('table');
+    table.style.width = '100%';
+    table.style.borderCollapse = 'collapse';
+
+    // Add table header
+    const headerRow = table.insertRow();
+    ['Question', 'Accuracy', 'Lap Time', 'Speed Bonus', 'Score'].forEach(text => {
+        const th = document.createElement('th');
+        th.textContent = text;
+        th.style.border = '1px solid black';
+        th.style.padding = '5px';
+        headerRow.appendChild(th);
+    });
+
+    // Add data rows
+    const questionTypes = ['Easy', 'Medium', 'Hard'];
+    let totalAccuracy = 0;
+    let totalLapTime = 0;
+    let totalSpeedBonus = 0;
+    let totalScore = 0;
+
+    userAnswers.forEach((answer, index) => {
+        const row = table.insertRow();
+        
+        // Question
+        const cellQuestion = row.insertCell();
+        cellQuestion.textContent = questionTypes[index];
+        cellQuestion.style.border = '1px solid black';
+        cellQuestion.style.padding = '5px';
+
+        // Accuracy
+        const cellAccuracy = row.insertCell();
+        const accuracyPoints = answer.correct ? [100, 125, 150][index] : 0;
+        cellAccuracy.textContent = `${accuracyPoints} of ${[100, 125, 150][index]} points`;
+        cellAccuracy.style.border = '1px solid black';
+        cellAccuracy.style.padding = '5px';
+        cellAccuracy.style.color = answer.correct ? 'green' : 'red';
+        totalAccuracy += accuracyPoints;
+
+        // Lap Time
+        const cellLapTime = row.insertCell();
+        cellLapTime.textContent = `${answer.lapTime} seconds`;
+        cellLapTime.style.border = '1px solid black';
+        cellLapTime.style.padding = '5px';
+        totalLapTime += parseFloat(answer.lapTime);
+
+        // Speed Bonus
+        const cellSpeedBonus = row.insertCell();
+        cellSpeedBonus.textContent = answer.speedPoints.toFixed(2);
+        cellSpeedBonus.style.border = '1px solid black';
+        cellSpeedBonus.style.padding = '5px';
+        totalSpeedBonus += answer.speedPoints;
+
+        // Score
+        const cellScore = row.insertCell();
+        const score = accuracyPoints + answer.speedPoints;
+        cellScore.textContent = score.toFixed(2);
+        cellScore.style.border = '1px solid black';
+        cellScore.style.padding = '5px';
+        totalScore += score;
+    });
+
+    // Add total row
+    const totalRow = table.insertRow();
+    const cellTotalLabel = totalRow.insertCell();
+    cellTotalLabel.textContent = 'TOTAL';
+    cellTotalLabel.style.fontWeight = 'bold';
+    cellTotalLabel.style.border = '1px solid black';
+    cellTotalLabel.style.padding = '5px';
+
+    const cellTotalAccuracy = totalRow.insertCell();
+    cellTotalAccuracy.textContent = `${Math.round((totalAccuracy / 375) * 100)}%`;
+    cellTotalAccuracy.style.border = '1px solid black';
+    cellTotalAccuracy.style.padding = '5px';
+
+    const cellTotalLapTime = totalRow.insertCell();
+    cellTotalLapTime.textContent = `${totalLapTime.toFixed(2)} seconds`;
+    cellTotalLapTime.style.border = '1px solid black';
+    cellTotalLapTime.style.padding = '5px';
+
+    const cellTotalSpeedBonus = totalRow.insertCell();
+    cellTotalSpeedBonus.textContent = totalSpeedBonus.toFixed(2);
+    cellTotalSpeedBonus.style.border = '1px solid black';
+    cellTotalSpeedBonus.style.padding = '5px';
+
+    const cellTotalScore = totalRow.insertCell();
+    cellTotalScore.textContent = totalScore.toFixed(2);
+    cellTotalScore.style.border = '1px solid black';
+    cellTotalScore.style.padding = '5px';
+
+    return table;
+}    
  
     function showAnswersPopup(userAnswers, currentCase) {
         const popup = document.createElement("div");
@@ -611,8 +687,8 @@ function showResults() {
     }
     
     function addCompositeScoreClickListener() {
-        const compositeScoreElement = document.getElementById('compositeScore');
-        compositeScoreElement.addEventListener('click', function() {
+        const compositeScoreLink = document.getElementById('compositeScoreLink');
+        compositeScoreLink.addEventListener('click', function() {
             const popup = document.createElement('div');
             popup.id = 'scoreInfoPopup';
             // Style the popup as necessary
