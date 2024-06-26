@@ -217,7 +217,6 @@ document.addEventListener("DOMContentLoaded", () => {
             const progressBar = document.getElementById("progressBar");
             progressBar.style.width = "0%";
         
-            // Other initialization as needed...
         }
         
     startButton.addEventListener("click", function() {
@@ -448,6 +447,45 @@ function showResults() {
         totalCompositeScore += validAccuracyPoints + validSpeedPoints;
     });
 
+    function displayAiScores(aiScores) {
+        const scores = {...aiScores, "User": totalCompositeScore.toFixed(2)};
+        const sortedScores = Object.entries(scores).sort((a, b) => b[1] - a[1]);
+    
+        const scoreTable = document.createElement('table');
+        scoreTable.style.width = '50%';  // Makes the table narrower
+        scoreTable.style.margin = 'auto';  // Centers the table
+        scoreTable.innerHTML = '<tr><th>Participant</th><th>Score</th></tr>';
+    
+        sortedScores.forEach(([name, score]) => {
+            const row = document.createElement('tr');
+            const participantCell = document.createElement('td');
+            const scoreCell = document.createElement('td');
+            participantCell.textContent = name;
+            scoreCell.textContent = parseFloat(score).toFixed(2);  // Format score to two decimals
+    
+            // Check if the current row is for the User and apply styles
+            if (name === "User") {
+                participantCell.style.fontWeight = 'bold';
+                participantCell.style.color = 'green';
+                scoreCell.style.fontWeight = 'bold';
+                scoreCell.style.color = 'green';
+            }
+    
+            row.appendChild(participantCell);
+            row.appendChild(scoreCell);
+            scoreTable.appendChild(row);
+        });
+    
+        const resultsContainer = document.getElementById('resultsSection');
+        const header = document.createElement('h3');
+        header.textContent = "You vs. the Machines";
+        resultsContainer.appendChild(header);
+        resultsContainer.appendChild(scoreTable);
+    }
+    
+    
+
+
     // Display total time
     const totalTimeElement = document.createElement("p");
     totalTimeElement.textContent = `Total Time: ${totalTime.toFixed(2)} seconds`;
@@ -469,6 +507,9 @@ function showResults() {
     const percentileDisplay = document.createElement("p");
     percentileDisplay.textContent = `You scored in the ${parseInt(percentile)}th percentile!`;
     resultsSection.appendChild(percentileDisplay);
+
+    // Call displayAiScores with the AI scores from the current case
+    displayAiScores(currentCase.aiScores); // Ensure aiScores are properly structured in your case data
 
     // Attach an event listener to the composite score element
     addCompositeScoreClickListener();
@@ -678,7 +719,6 @@ function showResults() {
     }
     
     
-
     function saveScore(caseId, score) {
         localStorage.setItem('score_' + caseId, score);
     }

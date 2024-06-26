@@ -5,6 +5,13 @@
     "title": "Amazon CaseRace",
     "topic": "Acquisitions",
     "caserace #":"6",
+    "aiScores": {
+      "ChatGPT": 350,
+      "Copilot": 325,
+      "Gemini": 300,
+      "Llama": 280,
+      "Claude": 360
+    },
     "snippet": "In 2017, Amazon, a global leader in e-commerce, made a bold strategic move...",
     "content":  [
       "In 2017, Amazon, a global leader in e-commerce, made a bold strategic move by purchasing Whole Foods Market, a high-end supermarket chain known for its organic and natural food selections, for $13.7 billion. This was not just a simple expansion of business for Amazon but a significant step into the brick-and-mortar retail space, a domain it had only lightly touched upon previously. Amazon, predominantly an online retailer, faced the challenge of entering and establishing itself in the physical retail market. While it had mastered e-commerce, the company recognized the persistent value and market share of physical stores, especially in the grocery sector. To address this challenge, Amazon decided to leverage Whole Foods’ established brand and nationwide network of stores. This strategic purchase was important in multiple ways:",
@@ -57,6 +64,13 @@
     "title": "Netflix CaseRace",
     "topic": "Startups",
     "caserace #":"5",
+    "aiScores": {
+      "ChatGPT": 350,
+      "Copilot": 325,
+      "Gemini": 300,
+      "Llama": 280,
+      "Claude": 360
+    },
     "snippet": "In the late 1990s, a startup named Netflix emerged...",
     "content": [
       "In the late 1990s, a startup named Netflix emerged in the competitive entertainment market with a business model built around mailing DVDs to customers, a novel concept at the time. In the early stages, Netflix carried less than a thousand DVD titles. With a daily shipment volume of twenty to thirty, their operations were manageable without advanced technology. However, the introduction of their no-due-date, no-late-fees program led to an explosion in popularity. The subscriber count soared to 250,000, and the DVD library expanded to nearly 10,000 titles. Netflix had to adapt quickly and figure out how to efficiently manage and distribute a growing library of DVDs to a rapidly expanding customer base.",
@@ -102,6 +116,13 @@
     "title": "Southwest CaseRace",
     "topic": "Organizational Behavior",
     "caserace #":"4",
+    "aiScores": {
+      "ChatGPT": 350,
+      "Copilot": 325,
+      "Gemini": 300,
+      "Llama": 280,
+      "Claude": 360
+    },
     "snippet": "Established in 1967, Southwest Airlines has evolved into a top low-cost carrier in the United States, a success largely attributed to its people-centric culture.",
     "content": [
       "Established in 1967, Southwest Airlines has evolved into a top low-cost carrier in the United States, a success largely attributed to its people-centric culture. This culture, echoing co-founder Herb Kelleher's belief that 'Your people come first, and if you treat them right, they'll treat the customers right,' places a strong emphasis on employee well-being. This focus not only fosters exceptional customer service but is also integral to Southwest's commitment to legendary hospitality and a renowned culture which are built on the following principals:",
@@ -149,6 +170,13 @@
     "title": "Title of the Case  3",
     "topic": "Strategy",
     "caserace #":"3",
+    "aiScores": {
+      "ChatGPT": 350,
+      "Copilot": 325,
+      "Gemini": 300,
+      "Llama": 280,
+      "Claude": 360
+    },
     "snippet": "TEST Sentence fragment to draw them in... 3",
     "content": [
       "Paragraph 1 Text 3",
@@ -194,6 +222,13 @@
     "title": "Title of the Case 2",
     "topic": "Logistics",
     "caserace #":"2",
+    "aiScores": {
+      "ChatGPT": 350,
+      "Copilot": 325,
+      "Gemini": 300,
+      "Llama": 280,
+      "Claude": 360
+    },
     "snippet": "TEST Sentence fragment to draw them in... 2",
     "content": [
       "Paragraph 1 Text 2",
@@ -239,6 +274,13 @@
     "title": "Title of the Case 1",
     "topic": "Accounting",
     "caserace #":"1",
+    "aiScores": {
+      "ChatGPT": 350,
+      "Copilot": 325,
+      "Gemini": 300,
+      "Llama": 280,
+      "Claude": 360
+    },
     "snippet": "TEST Sentence fragment to draw them in... 1",
     "content": [
       "Paragraph 1 Text 1",
