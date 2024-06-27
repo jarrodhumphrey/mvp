@@ -24,12 +24,12 @@ body {
     text-transform: uppercase;
 }
 
-button {
+/*button {
     margin-top: 20px;
     padding: 10px 20px;
     font-size: 16px;
     cursor: pointer;
-}
+}*/
 
 #progressBarContainer {
     width: 100%;
@@ -44,13 +44,13 @@ button {
     transition: width 90s linear; /* Transition over 90 seconds */
 }
 
-#proceedToQuestions {
-    display: block; /* Change from inline to block for margin auto to work */
-    margin: 20px auto; /* Vertical margin and auto horizontal margin for centering */
+/*#proceedToQuestions {
+    display: block;
+    margin: 20px auto; 
     padding: 10px 20px;
     font-size: 16px;
     cursor: pointer;
-}
+}*/
 
 #questionProgressBarContainer {
     width: 100%;
@@ -72,7 +72,7 @@ button {
     margin: 0; /* Removes default margin */
 }
 
-.answerButton {
+/*.answerButton {
     display: block;
     width: 100%;
     padding: 10px;
@@ -80,8 +80,8 @@ button {
     background-color: #f0f0f0;
     border: 1px solid #ccc;
     cursor: pointer;
-    text-align: center; /* Aligns text to the center */
-}
+    text-align: center; 
+}*/
 
 
 
@@ -105,29 +105,29 @@ h1 {
     font-weight: bold;
 }
 
-#showPriorCasesBtn {
-    display: block; /* Makes the button fill the width of its container */
-    margin: 20px auto; /* Adds margin and centers the button */  
+/*#showPriorCasesBtn {
+    display: block; 
+    margin: 20px auto;
     padding: 10px 20px;
     font-size: 16px;
     cursor: pointer;
-    background-color: #4CAF50; /* Example color, change as needed */
+    background-color: #4CAF50; 
     color: white;          
-    border: none;          /* Removes default border */
-    border-radius: 5px;    /* Adds a slight curve to the button */
+    border: none;          
+    border-radius: 5px;    
   }
 
   .caseRaceButton {
-    display: block; /* Makes the button fill the width of its container */
-    margin: 20px auto; /* Adds margin and centers the button */  
+    display: block; 
+    margin: 20px auto; 
     padding: 10px 20px;
     font-size: 16px;
     cursor: pointer;
-    background-color: #4CAF50; /* Example color, change as needed */
+    background-color: #4CAF50; 
     color: white;          
-    border: none;          /* Removes default border */
-    border-radius: 5px;    /* Adds a slight curve to the button */
-}
+    border: none;          
+    border-radius: 5px;    
+}*/
 
 /* In your CSS file */
 #caseModal {
@@ -194,5 +194,71 @@ h1 {
     color: green;
     text-decoration: underline;
     cursor: pointer;
+}
+
+table.modern-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin: auto;
+}
+
+table.modern-table th,
+table.modern-table td {
+    border: 1px solid #ddd; /* Light grey border */
+    padding: 8px;
+    text-align: center; /* Center align text */
+}
+
+table.modern-table th {
+    background-color: #f2f2f2; /* Light grey background for headers */
+    font-weight: bold; /* Bold text for headers */
+}
+
+table.modern-table td {
+    background-color: #fff; /* White background for cells */
+}
+
+table.modern-table tr:nth-child(even) {
+    background-color: #f9f9f9; /* Alternate row background color */
+}
+
+table.modern-table tr:hover {
+    background-color: #f1f1f1; /* Highlight row on hover */
+}
+
+/* Add these new button styles */
+button, .caseRaceButton {
+    display: inline-block;
+    width: 100%;
+    margin: 10px 0;
+    padding: 10px 20px;
+    font-size: 16px;
+    font-weight: 500;
+    text-align: center;
+    text-decoration: none;
+    cursor: pointer;
+    border: none;
+    border-radius: 5px;
+    background-color: rgba(76, 175, 80, 0.8); /* Translucent green */
+    color: black;
+    transition: background-color 0.3s ease;
+}
+
+button:hover, .caseRaceButton:hover {
+    background-color: rgba(76, 175, 80, 1); /* Solid green on hover */
+}
+
+#startButton, #proceedToQuestions, #showPriorCasesBtn, #showAnswersBtn {
+    display: block;
+    width: 100%;
+    max-width: 300px;
+    margin: 20px auto;
+}
+
+#answerOptions .answerButton {
+    display: block;
+    width: 100%;
+    margin: 10px 0;
+    text-align: left;
 }
 
