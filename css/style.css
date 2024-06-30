@@ -9,6 +9,14 @@ body {
     background-color: #f0f0f0;
 }
 
+#headerImage {
+    display: block;
+    margin: 0 auto;
+    max-width: 300px;  /* Adjust this value as needed */
+    width: 80%;  /* This makes it responsive */
+    height: auto;  /* This maintains the aspect ratio */
+}
+
 #gameContainer {
     width: 90%;
     max-width: 600px;
@@ -18,23 +26,98 @@ body {
 
 #caseTitle {
     text-transform: uppercase;
+    font-family: 'Press Start 2P', cursive;
+    color: #4CAF50;
+    text-shadow: 
+       -1px -1px 0 #000,  
+        1px -1px 0 #000,
+       -1px  1px 0 #000,
+        1px  1px 0 #000;
 }
 
 #welcomeTitle {
     text-transform: uppercase;
+    font-size: .8em;
+    font-family: 'Press Start 2P', cursive;
+    color: #4CAF50;
+    text-shadow: 
+       -1px -1px 0 #000,  
+        1px -1px 0 #000,
+       -1px  1px 0 #000,
+        1px  1px 0 #000;
+    margin-bottom: 5px;
 }
 
-/*button {
-    margin-top: 20px;
+#todaysCaseRace {
+    text-transform: uppercase;
+    font-family: 'Press Start 2P', cursive;
+    font-size: 1.2em;
+    text-align: center;
+    /*background-color: #ddd;*/
+    color:#000;
     padding: 10px 20px;
-    font-size: 16px;
-    cursor: pointer;
-}*/
+    display: inline-block;
+    margin: 0 auto;
+    text-shadow: 
+       -1px -1px 0 #4CAF50,  
+        1px -1px 0 #4CAF50,  
+       -1px  1px 0 #4CAF50,  
+        1px  1px 0 #4CAF50;  
+  /*  border-radius: 10px;  Rounded corners */
+  /*  box-shadow: 0 0 10px rgba(0, 0, 0, 0.3); /* Optional: adds a subtle shadow */
+}
+
+.pixel-font-text {
+    font-family: 'Press Start 2P', cursive;
+    text-align: center;
+    font-size: 1em;  /* Adjust this size as needed */
+    line-height: 1.5;
+    margin: 10px 0;
+    color:#000;
+    padding: 10px 20px;
+    display: inline-block;
+    margin: 0 auto;
+    text-shadow: 
+       -1px -1px 0 #4CAF50,  
+        1px -1px 0 #4CAF50,  
+       -1px  1px 0 #4CAF50,  
+        1px  1px 0 #4CAF50;  
+}
+
+.case-race-box {
+    font-family: 'Press Start 2P', cursive;
+    text-align: center;
+    background-color: rgba(0, 0, 0, 0.7); /* Softer, translucent black */
+    color: #4CAF50;
+    padding: 15px 20px;
+    display: inline-block;
+    margin: 10px auto;
+    border-radius: 10px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
+    line-height: 1.5;
+    max-width: 80%;
+}
+
+.case-race-text {
+    font-family: 'Press Start 2P', cursive;
+    text-align: center;
+    color: #4CAF50;
+    line-height: 1.5;
+    max-width: 80%;
+    margin: 10px auto;
+    display: block;
+}
+
+#caseSnippet {
+    font-size: 0.9em;
+    display: inline;
+}
 
 #progressBarContainer {
     width: 100%;
     background-color: #e0e0e0;
     margin: 10px 0;
+    border-color: #000;
 }
 
 #progressBar {
@@ -43,14 +126,6 @@ body {
     background-color: #4CAF50;
     transition: width 90s linear; /* Transition over 90 seconds */
 }
-
-/*#proceedToQuestions {
-    display: block;
-    margin: 20px auto; 
-    padding: 10px 20px;
-    font-size: 16px;
-    cursor: pointer;
-}*/
 
 #questionProgressBarContainer {
     width: 100%;
@@ -72,19 +147,6 @@ body {
     margin: 0; /* Removes default margin */
 }
 
-/*.answerButton {
-    display: block;
-    width: 100%;
-    padding: 10px;
-    margin: 5px 0;
-    background-color: #f0f0f0;
-    border: 1px solid #ccc;
-    cursor: pointer;
-    text-align: center; 
-}*/
-
-
-
 @keyframes fillBar {
     from { width: 0%; }
     to { width: 100%; }
@@ -98,36 +160,38 @@ body {
 h1 {
     text-align: center;
     text-transform: uppercase;
+    font-family: 'Press Start 2P', cursive;
     /* Additional styling */
+}
+
+.leaderboard-title {
+    font-family: 'Press Start 2P', cursive;
+    text-align: center;
+    margin-bottom: 20px;
+    color: #4CAF50;
+    text-shadow: 
+       -1px -1px 0 #000,  
+        1px -1px 0 #000,
+       -1px  1px 0 #000,
+        1px  1px 0 #000;
+        text-transform: uppercase;
+}
+
+.question-header {
+    font-family: 'Press Start 2P', cursive;
+    text-align: center;
+    color: #4CAF50;
+    text-shadow: 
+       -1px -1px 0 #000,  
+        1px -1px 0 #000,
+       -1px  1px 0 #000,
+        1px  1px 0 #000;
+    text-transform: uppercase;
 }
 
 .question, .answer {
     font-weight: bold;
 }
-
-/*#showPriorCasesBtn {
-    display: block; 
-    margin: 20px auto;
-    padding: 10px 20px;
-    font-size: 16px;
-    cursor: pointer;
-    background-color: #4CAF50; 
-    color: white;          
-    border: none;          
-    border-radius: 5px;    
-  }
-
-  .caseRaceButton {
-    display: block; 
-    margin: 20px auto; 
-    padding: 10px 20px;
-    font-size: 16px;
-    cursor: pointer;
-    background-color: #4CAF50; 
-    color: white;          
-    border: none;          
-    border-radius: 5px;    
-}*/
 
 /* In your CSS file */
 #caseModal {
@@ -234,14 +298,18 @@ button, .caseRaceButton {
     padding: 10px 20px;
     font-size: 16px;
     font-weight: 500;
+    font-family: 'Press Start 2P', cursive;
     text-align: center;
     text-decoration: none;
     cursor: pointer;
-    border: none;
+    /*border: none;*/
+    border-color: #000;
     border-radius: 5px;
     background-color: rgba(76, 175, 80, 0.8); /* Translucent green */
     color: black;
     transition: background-color 0.3s ease;
+    text-transform: uppercase;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.3); /* Optional: adds a subtle shadow */
 }
 
 button:hover, .caseRaceButton:hover {
@@ -251,7 +319,7 @@ button:hover, .caseRaceButton:hover {
 #startButton, #proceedToQuestions, #showPriorCasesBtn, #showAnswersBtn {
     display: block;
     width: 100%;
-    max-width: 300px;
+    /*max-width: 300px;*/
     margin: 20px auto;
 }
 

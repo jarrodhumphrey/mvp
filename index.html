@@ -7,15 +7,21 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>CaseRace</title>
     <link rel="stylesheet" href="css/style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=VT323&display=swap" rel="stylesheet">
 </head>
 <body>
     <div id="gameContainer">
         <!-- Introduction Section -->
         <section id="introSection">
-            <h1 id="welcomeTitle">Welcome to CaseRace</h1>
-            <h3 style="text-align: center; text-decoration: underline;">Today's CaseRace:</h3>
-            <p id="caseSnippet"><!-- Snippet will be loaded here dynamically --></p>
-            <button id="startButton" class="caseRaceButton">Click to Start this CaseRace</button>
+            <h1 id="welcomeTitle">welcome to<br>
+                   </h1>
+            <img src="MVP Images/Checkered_Flags.jpg" alt="Checkered Flag" id="headerImage">
+            <div id="todaysCaseRace" class="case-race-text">
+                Today's CaseRace:<br> 
+                <span id="caseSnippet"></span>
+            </div>
+            <button id="startButton" class="caseRaceButton">Click to Start</button>
             <p class="instructions">
                 Click start to begin your CaseRace. You will have a maximum of 90 seconds to read the case followed by 30 seconds each to answer three progressively harder questions. Good luck CaseRacer!
             </p>
@@ -33,7 +39,7 @@
         
         <!-- Questions Section (Questions and options loaded dynamically) -->
         <section id="questionSection" style="display:none;">
-            <h2 id="questionNumber"></h2> <!-- Dynamically updated -->
+            <h2 id="questionNumber" class="question-header"></h2> <!-- Dynamically updated -->
             <div id="questionProgressBarContainer">
                 <div id="questionProgressBar"></div>
             </div>
@@ -43,8 +49,7 @@
 
         <!-- Results Section (Results populated dynamically) -->
         <section id="resultsSection" style="display:none;">
-            <h2>Your Results</h2> <!-- Results dynamically generated -->
-       </div>
+        </div>
         </section>
 
    

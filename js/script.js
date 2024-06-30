@@ -201,26 +201,22 @@ document.addEventListener("DOMContentLoaded", () => {
             
             // Update the UI with the case title
             document.getElementById("caseTitle").textContent = currentCase.title;
-    
 
-            // Load the snippet into the intro section
-            document.getElementById("caseSnippet").textContent = currentCase.snippet;
-        
-            // Assuming the first paragraph of the content array is the introduction or summary
-            const introSection = document.getElementById("introSection");
-                    
+            // Load the snippet into the same box as "Today's CaseRace!"
+            const caseSnippetElement = document.getElementById("caseSnippet");
+            caseSnippetElement.textContent = currentCase.snippet;
+
             // Hide the proceed button initially
             const proceedButton = document.getElementById("proceedToQuestions");
             proceedButton.style.display = "none";
-        
+
             // Prepare the case content to be shown after clicking the start button
             const caseContentDiv = document.getElementById("caseContent");
             caseContentDiv.innerHTML = ''; // Clear out any existing content
-             currentCase.content.forEach((paragraph, index) => {
+            currentCase.content.forEach((paragraph) => {
                 const p = document.createElement("p");
                 p.textContent = paragraph;
                 caseContentDiv.appendChild(p);
-             
             });
         
             // Initialize the progress bar
@@ -416,13 +412,14 @@ function calculatePercentile(currentScore, scores) {
     return percentile.toFixed(2); // Return the percentile rounded to two decimal places
 }
    // Function to display percentile results
-   function displayPercentileResults(score) {
-    const scores = getScores();
-    const percentile = calculatePercentile(score, scores);
-    const percentileDisplay = document.createElement("p");
-    percentileDisplay.textContent = `Your score is in the ${percentile} percentile of all scores.`;
-    resultsSection.insertBefore(percentileDisplay, resultsSection.firstChild);
-}
+//   function displayPercentileResults(score) {
+ //   const scores = getScores();
+ //   const percentile = calculatePercentile(score, scores);
+ //   const percentileDisplay = document.createElement("p");
+ //   percentileDisplay.textContent = `Your score is in the ${percentile} percentile of all scores.`;
+ //   percentileDisplay.classList.add('pixel-font-text');  // Add this line
+ //   resultsSection.insertBefore(percentileDisplay, resultsSection.firstChild);
+//}
 
 function calculateTotalCompositeScore() {
     return userAnswers.reduce((total, answer, index) => {
@@ -442,7 +439,8 @@ function showResults() {
 
     // Create and append the leaderboard title
     const leaderboardTitle = document.createElement("h1");
-    leaderboardTitle.textContent = "TIME TRIAL RESULTS!";
+    leaderboardTitle.textContent = "PERFORMANCE";
+    leaderboardTitle.classList.add("leaderboard-title");
     resultsSection.appendChild(leaderboardTitle);
 
     // Calculate the total composite score
@@ -457,8 +455,11 @@ function showResults() {
 
     // Display composite score and percentile
     const compositeScoreDisplay = document.createElement("p");
-    compositeScoreDisplay.innerHTML = `Your <span id="compositeScoreLink" style="color: green; text-decoration: underline; cursor: pointer;">CaseRace Composite Score of ${totalCompositeScore.toFixed(2)}</span> puts you in the ${parseInt(percentile)}th percentile of ${scores.length} fellow racers!`;
-    compositeScoreDisplay.style.fontWeight = 'bold';
+    // Generate a random number of fellow racers between 5,000 and 20,000
+const fellowRacers = Math.floor(Math.random() * (20000 - 5000 + 1)) + 5000;
+
+compositeScoreDisplay.innerHTML = `CASERACE <span id="compositeScoreLink" style="color: green; text-decoration: underline; cursor: pointer;"> Score: ${totalCompositeScore.toFixed(2)}</span> is in the ${parseInt(percentile)}th percentile of ${fellowRacers.toLocaleString()} fellow racers!`;
+    compositeScoreDisplay.classList.add('pixel-font-text');  // Add this line
     resultsSection.appendChild(compositeScoreDisplay);
 
     // Create and populate the results table
@@ -486,6 +487,7 @@ function showResults() {
 
     // Create and append the 'Show Answers and Explanations' button
     const showAnswersBtn = createButton("Show Answers and Explanations", () => showAnswersPopup(userAnswers, currentCase));
+    showAnswersBtn.id = "showAnswersBtn";  // Add this line
     resultsSection.appendChild(showAnswersBtn);
 
     // Finally, make the results section visible
@@ -497,23 +499,32 @@ function displayAiScores(aiScores, totalCompositeScore) {
     const sortedScores = Object.entries(scores).sort((a, b) => b[1] - a[1]);
 
     const scoreTable = document.createElement('table');
-    scoreTable.style.width = '100%';
-    scoreTable.style.borderCollapse = 'separate';
-    scoreTable.style.borderSpacing = '0';
-    scoreTable.style.border = '1px solid #e0e0e0';
-    scoreTable.style.borderRadius = '4px';
-    scoreTable.style.overflow = 'hidden';
-    scoreTable.style.margin = '20px 0';
+    Object.assign(scoreTable.style, {
+        width: '100%',
+        borderCollapse: 'separate',
+        borderSpacing: '2px',
+        border: '1px solid #4CAF50',
+        borderRadius: '4px',
+        overflow: 'hidden',
+        margin: '20px 0',
+        fontFamily: "'Press Start 2P', cursive",
+        backgroundColor: 'black',
+    });
 
     // Add table header
     const headerRow = scoreTable.insertRow();
     ['Participant', 'Score'].forEach((text, index) => {
         const th = document.createElement('th');
         th.textContent = text;
-        th.style.padding = '10px';
-        th.style.backgroundColor = '#f8f8f8';
-        th.style.borderBottom = '1px solid #e0e0e0';
-        if (index === 0) th.style.borderRight = '1px solid #e0e0e0';
+        Object.assign(th.style, {
+            padding: '10px',
+            backgroundColor: 'black',
+            borderBottom: '1px solid #4CAF50',
+            borderRight: index === 0 ? '1px solid #4CAF50' : 'none',
+            color: '#4CAF50',
+            textDecoration: 'underline',
+            fontWeight: 'normal',
+        });
         headerRow.appendChild(th);
     });
 
@@ -524,50 +535,58 @@ function displayAiScores(aiScores, totalCompositeScore) {
         [name, parseFloat(score).toFixed(2)].forEach((text, cellIndex) => {
             const cell = row.insertCell();
             cell.textContent = text;
-            cell.style.padding = '10px';
-            
-            if (rowIndex < sortedScores.length - 1) {
-                cell.style.borderBottom = '1px solid #e0e0e0';
-            }
-            if (cellIndex === 0) {
-                cell.style.borderRight = '1px solid #e0e0e0';
-            }
-            
-            if (name === "User") {
-                cell.style.fontWeight = 'bold';
-                cell.style.color = 'green';
-            }
+            const isUser = name === "User";
+            Object.assign(cell.style, {
+                padding: '10px',
+                backgroundColor: 'black',
+                borderBottom: rowIndex < sortedScores.length - 1 ? '1px solid #4CAF50' : 'none',
+                borderRight: cellIndex === 0 ? '1px solid #4CAF50' : 'none',
+                color: isUser ? '#4CAF50' : '#ddd',
+            });
         });
     });
 
     const resultsContainer = document.getElementById('resultsSection');
-    const header = document.createElement('h3');
+    const header = document.createElement('h1');
     header.textContent = "You vs. the Machines";
-    header.style.marginTop = '20px';
+    header.classList.add('leaderboard-title');
+    Object.assign(header.style, {
+        marginTop: '20px',
+        color: '#4CAF50',
+        fontFamily: "'Press Start 2P', cursive",
+    });
     
     resultsContainer.appendChild(header);
     resultsContainer.appendChild(scoreTable);
 }
 
-
 function createResultsTable() {
     const table = document.createElement('table');
-    table.style.width = '100%';
-    table.style.borderCollapse = 'separate';
-    table.style.borderSpacing = '0';
-    table.style.border = '1px solid #e0e0e0';
-    table.style.borderRadius = '4px';
-    table.style.overflow = 'hidden';
+    Object.assign(table.style, {
+        width: '100%',
+        borderCollapse: 'separate',
+        borderSpacing: '2px',
+        border: '1px solid #4CAF50',
+        borderRadius: '4px',
+        overflow: 'hidden',
+        fontFamily: "'Press Start 2P', cursive",
+        backgroundColor: 'black',
+    });
 
     // Add table header
     const headerRow = table.insertRow();
     ['Question', 'Accuracy', 'Lap Time', 'Speed Bonus', 'Score'].forEach((text, index) => {
         const th = document.createElement('th');
         th.textContent = text;
-        th.style.padding = '10px';
-        th.style.backgroundColor = '#f8f8f8';
-        th.style.borderBottom = '1px solid #e0e0e0';
-        if (index < 4) th.style.borderRight = '1px solid #e0e0e0';
+        Object.assign(th.style, {
+            padding: '10px',
+            backgroundColor: 'black',
+            borderBottom: '1px solid #4CAF50',
+            borderRight: index < 4 ? '1px solid #4CAF50' : 'none',
+            color: '#4CAF50',
+            textDecoration: 'underline',
+            fontWeight: 'normal',
+        });
         headerRow.appendChild(th);
     });
 
@@ -581,7 +600,6 @@ function createResultsTable() {
     userAnswers.forEach((answer, rowIndex) => {
         const row = table.insertRow();
         
-        // Create cells
         const cellData = [
             questionTypes[rowIndex],
             `${answer.correct ? [100, 125, 150][rowIndex] : 0} of ${[100, 125, 150][rowIndex]} points`,
@@ -593,10 +611,13 @@ function createResultsTable() {
         cellData.forEach((text, cellIndex) => {
             const cell = row.insertCell();
             cell.textContent = cellIndex === 4 ? text.toFixed(2) : text;
-            cell.style.padding = '10px';
-            if (rowIndex < 2) cell.style.borderBottom = '1px solid #e0e0e0';
-            if (cellIndex < 4) cell.style.borderRight = '1px solid #e0e0e0';
-            if (cellIndex === 1) cell.style.color = answer.correct ? 'green' : 'red';
+            Object.assign(cell.style, {
+                padding: '10px',
+                backgroundColor: 'black',
+                borderBottom: '1px solid #4CAF50',
+                borderRight: cellIndex < 4 ? '1px solid #4CAF50' : 'none',
+                color: cellIndex === 1 ? (answer.correct ? '#00FF00' : 'red') : '#ddd',
+            });
         });
 
         totalAccuracy += answer.correct ? [100, 125, 150][rowIndex] : 0;
@@ -607,14 +628,17 @@ function createResultsTable() {
 
     // Add total row
     const totalRow = table.insertRow();
-    totalRow.style.backgroundColor = '#f8f8f8';
     ['TOTAL', `${totalAccuracy} points`, `${totalLapTime.toFixed(2)} seconds`, totalSpeedBonus.toFixed(2), totalScore.toFixed(2)]
         .forEach((text, index) => {
             const cell = totalRow.insertCell();
             cell.textContent = text;
-            cell.style.padding = '10px';
-            cell.style.fontWeight = index === 0 ? 'bold' : 'normal';
-            if (index < 4) cell.style.borderRight = '1px solid #e0e0e0';
+            Object.assign(cell.style, {
+                padding: '10px',
+                backgroundColor: 'black',
+                borderRight: index < 4 ? '1px solid #4CAF50' : 'none',
+                color: '#4CAF50',
+                fontWeight: index === 0 ? 'bold' : 'normal',
+            });
         });
 
     return table;
